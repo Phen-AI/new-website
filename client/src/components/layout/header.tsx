@@ -13,6 +13,7 @@ export default function Header() {
       setIsScrolled(window.scrollY > 50);
     };
 
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -28,6 +29,14 @@ export default function Header() {
     { label: "About", href: "/about" },
     { label: "Blog", href: "/blog" },
   ];
+
+  const isActive = (href: string) => {
+    if (href === "/") {
+      return location === "/";
+    }
+
+    return location === href || location.startsWith(`${href}/`);
+  };
 
   return (
     <header
@@ -63,11 +72,12 @@ export default function Header() {
               <Link 
                 key={item.href} 
                 href={item.href}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors relative group"
+                className={`text-sm font-medium transition-colors relative group ${isActive(item.href) ? "text-foreground" : "text-muted-foreground"}`}
+                aria-current={isActive(item.href) ? "page" : undefined}
                 data-testid={`nav-${item.label.toLowerCase()}`}
               >
                 {item.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
+                <span className={`absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-300 ${isActive(item.href) ? "w-full" : "w-0 group-hover:w-full"}`}></span>
               </Link>
             ))}
             <ThemeToggle />
@@ -107,7 +117,8 @@ export default function Header() {
             <Link 
               key={item.href} 
               href={item.href}
-              className="block px-4 py-2 text-sm font-medium hover:bg-muted rounded-lg transition-colors"
+              className={`block px-4 py-2 text-sm font-medium rounded-lg transition-colors ${isActive(item.href) ? "bg-muted text-foreground" : "text-muted-foreground hover:bg-muted"}`}
+              aria-current={isActive(item.href) ? "page" : undefined}
               data-testid={`mobile-nav-${item.label.toLowerCase()}`}
             >
               {item.label}
@@ -129,3 +140,4 @@ export default function Header() {
     </header>
   );
 }
+

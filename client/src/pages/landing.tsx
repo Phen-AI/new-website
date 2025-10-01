@@ -1,42 +1,24 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import HeroGallery from "@/components/landing/hero-gallery";
 import GapReveal from "@/components/landing/gap-reveal";
-import { useGSAP } from "@/lib/gsap-utils";
 import { services, industries } from "@/lib/content";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function Landing() {
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    if (!window.gsap) return;
-
-    // Stagger service cards
-    window.gsap.from(".service-card", {
-      opacity: 0,
-      y: 50,
-      stagger: 0.2,
-      scrollTrigger: {
-        trigger: ".service-card",
-        start: "top 80%",
-      },
-    });
-
-    // Stagger innovation cards
-    window.gsap.from(".innovation-card", {
-      opacity: 0,
-      y: 50,
-      stagger: 0.15,
-      scrollTrigger: {
-        trigger: ".innovation-card",
-        start: "top 80%",
-      },
-    });
-  }, []);
+  const cardVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
 
   const scrollSlider = (direction: "left" | "right") => {
     if (!sliderRef.current) return;
@@ -115,57 +97,64 @@ export default function Landing() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <Link key={service.slug} href={`/technology/services/${service.slug}`}>
-                <a>
+              <Link
+                key={service.slug}
+                href={`/technology/services/${service.slug}`}
+                className="group block"
+                data-testid={`card-service-link-${service.slug}`}
+              >
+                <motion.div
+                  variants={cardVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  className="service-card glass-strong rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:-translate-y-2 cursor-pointer"
+                  data-testid={`card-service-${service.slug}`}
+                >
                   <div
-                    className="service-card group glass-strong rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:-translate-y-2 cursor-pointer"
-                    data-testid={`card-service-${service.slug}`}
+                    className={`w-16 h-16 rounded-xl ${
+                      index % 2 === 0 ? "bg-primary/20" : "bg-secondary/20"
+                    } flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}
                   >
-                    <div
-                      className={`w-16 h-16 rounded-xl ${
-                        index % 2 === 0 ? "bg-primary/20" : "bg-secondary/20"
-                      } flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}
-                    >
-                      <svg
-                        className={`w-8 h-8 ${
-                          index % 2 === 0 ? "text-primary" : "text-secondary"
-                        }`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d={service.icon}
-                        />
-                      </svg>
-                    </div>
-                    <h3 className="text-2xl font-serif font-semibold mb-4">{service.title}</h3>
-                    <p className="text-muted-foreground mb-6">{service.summary}</p>
-                    <span
-                      className={`inline-flex items-center ${
+                    <svg
+                      className={`w-8 h-8 ${
                         index % 2 === 0 ? "text-primary" : "text-secondary"
-                      } font-medium group-hover:gap-2 transition-all`}
+                      }`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
                     >
-                      Learn More
-                      <svg
-                        className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
-                    </span>
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d={service.icon}
+                      />
+                    </svg>
                   </div>
-                </a>
+                  <h3 className="text-2xl font-serif font-semibold mb-4">{service.title}</h3>
+                  <p className="text-muted-foreground mb-6">{service.summary}</p>
+                  <span
+                    className={`inline-flex items-center ${
+                      index % 2 === 0 ? "text-primary" : "text-secondary"
+                    } font-medium group-hover:gap-2 transition-all`}
+                  >
+                    Learn More
+                    <svg
+                      className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </span>
+                </motion.div>
               </Link>
             ))}
           </div>
@@ -300,8 +289,12 @@ export default function Landing() {
                 gradient: "from-secondary to-primary",
               },
             ].map((innovation, index) => (
-              <div
-                key={index}
+              <motion.div
+                key={`${innovation.title}-${index}`}
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
                 className="innovation-card glass-strong rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 group cursor-pointer"
               >
                 <div
@@ -339,7 +332,7 @@ export default function Landing() {
                     />
                   </svg>
                 </span>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -396,3 +389,5 @@ export default function Landing() {
     </div>
   );
 }
+
+
