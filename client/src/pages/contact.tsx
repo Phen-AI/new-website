@@ -89,6 +89,7 @@ export default function Contact() {
             >
               <div className="relative rounded-2xl overflow-hidden glass-strong h-[500px]">
                 <video
+                  id="contact-video"
                   autoPlay
                   loop
                   muted
@@ -103,16 +104,19 @@ export default function Contact() {
                 </video>
                 <div className="absolute bottom-4 right-4">
                   <button
-                    onClick={(e) => {
-                      const video = e.currentTarget.previousElementSibling as HTMLVideoElement;
-                      if (video.paused) {
-                        video.play();
-                      } else {
-                        video.pause();
+                    onClick={() => {
+                      const video = document.getElementById('contact-video') as HTMLVideoElement;
+                      if (video) {
+                        if (video.paused) {
+                          video.play();
+                        } else {
+                          video.pause();
+                        }
                       }
                     }}
                     className="px-4 py-2 glass-strong rounded-lg hover:bg-white/10 transition-colors text-sm font-medium"
                     aria-label="Play/Pause video"
+                    data-testid="button-video-control"
                   >
                     Play/Pause
                   </button>
