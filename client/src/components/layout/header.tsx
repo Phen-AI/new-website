@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, X } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -57,7 +58,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-6">
             {navItems.map((item) => (
               <Link 
                 key={item.href} 
@@ -69,6 +70,7 @@ export default function Header() {
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
               </Link>
             ))}
+            <ThemeToggle />
             <Link 
               href="/contact"
               className="px-6 py-2.5 bg-primary text-primary-foreground rounded-lg font-medium text-sm hover:bg-primary/90 transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
@@ -111,6 +113,10 @@ export default function Header() {
               {item.label}
             </Link>
           ))}
+          <div className="flex items-center justify-between px-4 py-2">
+            <span className="text-sm font-medium">Theme</span>
+            <ThemeToggle />
+          </div>
           <Link 
             href="/contact"
             className="block px-6 py-2.5 bg-primary text-primary-foreground rounded-lg font-medium text-sm text-center hover:bg-primary/90 transition-colors"
