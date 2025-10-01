@@ -23,7 +23,6 @@ export default function Header() {
   }, [location]);
 
   const navItems = [
-    { label: "Home", href: "/" },
     { label: "Industries", href: "/industries" },
     { label: "Technology", href: "/technology" },
     { label: "About", href: "/about" },
