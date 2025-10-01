@@ -17,7 +17,7 @@ const contactFormSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   company: z.string().min(2, "Company name is required"),
   projectType: z.string().min(1, "Please select a project type"),
-  budget: z.string().min(1, "Please select a budget range"),
+  budgetRange: z.string().min(1, "Please select a budget range"),
   message: z.string().min(10, "Message must be at least 10 characters"),
 });
 
@@ -34,15 +34,25 @@ export default function Contact() {
       email: "",
       company: "",
       projectType: "",
-      budget: "",
+      budgetRange: "",
       message: "",
     },
   });
 
   const onSubmit = async (data: ContactFormValues) => {
     try {
-      // In a real implementation, this would send to your API
-      console.log("Form submitted:", data);
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to submit");
+      }
       
       setIsSubmitted(true);
       toast({
@@ -51,10 +61,10 @@ export default function Contact() {
       });
       
       form.reset();
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: "Error",
-        description: "Failed to send message. Please try again.",
+        description: error.message || "Failed to send message. Please try again.",
         variant: "destructive",
       });
     }
@@ -235,7 +245,7 @@ export default function Contact() {
 
                     <FormField
                       control={form.control}
-                      name="budget"
+                      name="budgetRange"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Budget Range</FormLabel>

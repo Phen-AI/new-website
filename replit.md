@@ -29,7 +29,15 @@ Preferred communication style: Simple, everyday language.
 
 **State Management**: React Query (`@tanstack/react-query`) is used for server state management, with a custom query client configured in `lib/queryClient.ts`. Local UI state is managed with React hooks.
 
-**Styling Approach**: The design system uses CSS custom properties for theming, defined in `client/src/index.css`. A dark theme with teal/green accent colors (`--primary: hsl(158, 64%, 52%)`) is the default. Tailwind utilities are extended to support glassmorphism effects and the custom color palette.
+**Styling Approach**: The design system uses CSS custom properties for theming, defined in `client/src/index.css`. Supports both dark and light themes:
+- Dark theme (default): Deep ink backgrounds with emerald accents (`--primary: hsl(158, 64%, 52%)`)
+- Light theme: Clean white backgrounds with dark text
+- Theme toggle in header allows users to switch between themes
+- Theme preference persists to localStorage
+- Smooth transitions (0.3s ease) between theme changes
+- All glassmorphism effects update appropriately for each theme
+
+Tailwind utilities are extended to support glassmorphism effects and the custom color palette.
 
 **Animation System**: Two animation libraries are used:
 - GSAP with ScrollTrigger for scroll-based animations (loaded via CDN in `index.html`)
@@ -44,7 +52,11 @@ Preferred communication style: Simple, everyday language.
 
 **Development Mode**: In development, Vite runs as middleware within the Express server, enabling HMR (Hot Module Replacement) while maintaining a unified server process. This is configured in `server/vite.ts`.
 
-**API Structure**: API routes are registered in `server/routes.ts` and are prefixed with `/api`. Currently, the route registration is minimal as the application primarily serves static content.
+**API Structure**: API routes are registered in `server/routes.ts` and are prefixed with `/api`. Current endpoints:
+- `POST /api/contact`: Accepts contact form submissions with validation and rate limiting (5 per 15 min)
+  - Validates input using Zod schemas
+  - Stores submissions in PostgreSQL database
+  - TODO: Email integration pending (requires RESEND_API_KEY or SENDGRID_API_KEY environment variable)
 
 **Storage Layer**: An abstraction layer (`server/storage.ts`) provides a storage interface (`IStorage`) with methods for CRUD operations. The current implementation uses in-memory storage (`MemStorage`) with a basic user model. This design allows for easy swapping to database-backed storage without changing business logic.
 
@@ -58,7 +70,11 @@ Preferred communication style: Simple, everyday language.
 
 **Migration Strategy**: Drizzle Kit is configured for schema migrations with the `db:push` script. Migrations are stored in the `./migrations` directory.
 
-**Current State**: While database infrastructure is configured, the application currently uses in-memory storage. The database schema and connection setup are ready for when persistent storage is needed.
+**Current State**: The application now uses PostgreSQL for data persistence. Database schema includes:
+- `users` table: Basic user model (id, username, password)
+- `contact_submissions` table: Stores contact form submissions (id, name, email, company, projectType, budgetRange, message, createdAt)
+
+Storage implementation uses Drizzle ORM with Neon serverless driver for database operations.
 
 ## Authentication and Authorization
 
