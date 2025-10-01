@@ -1,0 +1,169 @@
+import { useEffect, useState } from "react";
+import { Link } from "wouter";
+import { Mail, Phone, MapPin, Linkedin, Twitter, Github } from "lucide-react";
+
+export default function Footer() {
+  const [currentYear, setCurrentYear] = useState(2024);
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  return (
+    <footer className="border-t border-border bg-card/50 backdrop-blur-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid md:grid-cols-3 gap-12 mb-12">
+          {/* Brand Column */}
+          <div>
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
+                <svg
+                  className="w-6 h-6 text-primary-foreground"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
+                </svg>
+              </div>
+              <span className="text-xl font-serif font-semibold">Phen AI</span>
+            </div>
+            <p className="text-muted-foreground">
+              Engineering intelligence you can trust. Delivering elegant systems
+              with measurable impact.
+            </p>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
+            <ul className="space-y-3">
+              <li>
+                <Link href="/">
+                  <a className="text-muted-foreground hover:text-foreground transition-colors">
+                    Home
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/industries">
+                  <a className="text-muted-foreground hover:text-foreground transition-colors">
+                    Industries
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/technology">
+                  <a className="text-muted-foreground hover:text-foreground transition-colors">
+                    Technology
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/about">
+                  <a className="text-muted-foreground hover:text-foreground transition-colors">
+                    About
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog">
+                  <a className="text-muted-foreground hover:text-foreground transition-colors">
+                    Blog
+                  </a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact">
+                  <a className="text-muted-foreground hover:text-foreground transition-colors">
+                    Contact
+                  </a>
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Details */}
+          <div>
+            <h3 className="font-semibold text-lg mb-4">Get in Touch</h3>
+            <ul className="space-y-3">
+              <li>
+                <a
+                  href="mailto:hello@phenai.com"
+                  className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
+                >
+                  <Mail className="w-5 h-5" />
+                  hello@phenai.com
+                </a>
+              </li>
+              <li>
+                <a
+                  href="tel:+1234567890"
+                  className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
+                >
+                  <Phone className="w-5 h-5" />
+                  +1 (234) 567-890
+                </a>
+              </li>
+              <li className="text-muted-foreground flex items-start gap-2">
+                <MapPin className="w-5 h-5 mt-0.5" />
+                <span>
+                  123 Innovation Drive
+                  <br />
+                  San Francisco, CA 94102
+                </span>
+              </li>
+            </ul>
+
+            <div className="flex gap-4 mt-6">
+              <a
+                href="#"
+                className="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="w-5 h-5" />
+              </a>
+              <a
+                href="#"
+                className="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                aria-label="Twitter"
+              >
+                <Twitter className="w-5 h-5" />
+              </a>
+              <a
+                href="#"
+                className="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                aria-label="GitHub"
+              >
+                <Github className="w-5 h-5" />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-border pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-muted-foreground text-sm">
+            © {currentYear} Phen AI. All rights reserved.
+          </p>
+          <button
+            onClick={scrollToTop}
+            className="px-4 py-2 glass rounded-lg text-sm font-medium hover:bg-white/10 transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-ring"
+            data-testid="button-scroll-top"
+          >
+            Back to Top ↑
+          </button>
+        </div>
+      </div>
+    </footer>
+  );
+}

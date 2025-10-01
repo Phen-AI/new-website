@@ -1,0 +1,398 @@
+import { useRef, useEffect } from "react";
+import { Link } from "wouter";
+import { motion } from "framer-motion";
+import Header from "@/components/layout/header";
+import Footer from "@/components/layout/footer";
+import HeroGallery from "@/components/landing/hero-gallery";
+import GapReveal from "@/components/landing/gap-reveal";
+import { useGSAP } from "@/lib/gsap-utils";
+import { services, industries } from "@/lib/content";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
+export default function Landing() {
+  const sliderRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (!window.gsap) return;
+
+    // Stagger service cards
+    window.gsap.from(".service-card", {
+      opacity: 0,
+      y: 50,
+      stagger: 0.2,
+      scrollTrigger: {
+        trigger: ".service-card",
+        start: "top 80%",
+      },
+    });
+
+    // Stagger innovation cards
+    window.gsap.from(".innovation-card", {
+      opacity: 0,
+      y: 50,
+      stagger: 0.15,
+      scrollTrigger: {
+        trigger: ".innovation-card",
+        start: "top 80%",
+      },
+    });
+  }, []);
+
+  const scrollSlider = (direction: "left" | "right") => {
+    if (!sliderRef.current) return;
+    const scrollAmount = direction === "left" ? -420 : 420;
+    sliderRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+  };
+
+  return (
+    <div className="min-h-screen">
+      <Header />
+
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        {/* Background particles */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="particle" style={{ left: "10%", top: "20%", animationDelay: "0s" }}></div>
+          <div className="particle" style={{ left: "80%", top: "30%", animationDelay: "2s" }}></div>
+          <div className="particle" style={{ left: "30%", top: "70%", animationDelay: "4s" }}></div>
+          <div className="particle" style={{ left: "70%", top: "60%", animationDelay: "6s" }}></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="text-center">
+            <HeroGallery />
+          </div>
+        </div>
+      </section>
+
+      {/* Vision Section */}
+      <section className="relative py-32 overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <img
+            src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=1920&h=1080&fit=crop"
+            alt="Abstract technology pattern"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-3xl sm:text-4xl lg:text-5xl font-serif font-semibold leading-relaxed mb-4"
+          >
+            We design intelligence you can trust—
+            <br />
+            elegant systems that deliver measurable value.
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="text-xl text-muted-foreground"
+          >
+            Not just an AI company—your engineering partner for lasting impact.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* Gap Reveal */}
+      <GapReveal />
+
+      {/* Services Section */}
+      <section className="py-24 bg-gradient-to-b from-background to-muted/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold mb-4">
+              Our Services
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Comprehensive solutions tailored to transform your vision into reality
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {services.map((service, index) => (
+              <Link key={service.slug} href={`/technology/services/${service.slug}`}>
+                <a>
+                  <div
+                    className="service-card group glass-strong rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 hover:-translate-y-2 cursor-pointer"
+                    data-testid={`card-service-${service.slug}`}
+                  >
+                    <div
+                      className={`w-16 h-16 rounded-xl ${
+                        index % 2 === 0 ? "bg-primary/20" : "bg-secondary/20"
+                      } flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}
+                    >
+                      <svg
+                        className={`w-8 h-8 ${
+                          index % 2 === 0 ? "text-primary" : "text-secondary"
+                        }`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d={service.icon}
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="text-2xl font-serif font-semibold mb-4">{service.title}</h3>
+                    <p className="text-muted-foreground mb-6">{service.summary}</p>
+                    <span
+                      className={`inline-flex items-center ${
+                        index % 2 === 0 ? "text-primary" : "text-secondary"
+                      } font-medium group-hover:gap-2 transition-all`}
+                    >
+                      Learn More
+                      <svg
+                        className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                </a>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Industries Slider */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold mb-4">
+              Industries We Serve
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Transforming sectors through intelligent innovation
+            </p>
+          </div>
+
+          <div className="relative">
+            <div
+              ref={sliderRef}
+              className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-8"
+              style={{ scrollBehavior: "smooth" }}
+            >
+              {industries.map((industry) => (
+                <Link key={industry.slug} href={`/industries/${industry.slug}`}>
+                  <a>
+                    <div
+                      className="industry-slide min-w-[320px] sm:min-w-[400px] snap-center group cursor-pointer"
+                      data-testid={`card-industry-${industry.slug}`}
+                    >
+                      <div className="relative h-96 rounded-2xl overflow-hidden glass-strong">
+                        <img
+                          src={industry.heroImage}
+                          alt={industry.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"></div>
+                        <div className="absolute bottom-0 left-0 right-0 p-8">
+                          <h3 className="text-2xl font-serif font-bold mb-2">
+                            {industry.title}
+                          </h3>
+                          <p className="text-muted-foreground mb-4">{industry.tagline}</p>
+                          <span className="inline-flex items-center text-primary font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                            View Industry
+                            <svg
+                              className="w-5 h-5 ml-1"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M9 5l7 7-7 7"
+                              />
+                            </svg>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </Link>
+              ))}
+            </div>
+
+            {/* Slider Controls */}
+            <button
+              onClick={() => scrollSlider("left")}
+              className="absolute top-1/2 -translate-y-1/2 left-0 w-12 h-12 rounded-full glass-strong flex items-center justify-center hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-ring"
+              aria-label="Previous slide"
+              data-testid="button-slider-prev"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <button
+              onClick={() => scrollSlider("right")}
+              className="absolute top-1/2 -translate-y-1/2 right-0 w-12 h-12 rounded-full glass-strong flex items-center justify-center hover:bg-white/10 transition-colors focus:outline-none focus:ring-ring"
+              aria-label="Next slide"
+              data-testid="button-slider-next"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Innovation Areas */}
+      <section className="py-24 bg-gradient-to-b from-muted/20 to-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold mb-4">
+              Innovation Areas
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Pioneering solutions at the intersection of AI, immersive tech, and industry
+              expertise
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                title: "PEBC OSPE VR AI Prep",
+                desc: "Immersive VR training platform for pharmacy professionals preparing for board certification exams.",
+                gradient: "from-primary to-secondary",
+              },
+              {
+                title: "Computer-Vision Disease Detection",
+                desc: "AI-powered crop monitoring system for early disease detection and yield optimization in agriculture.",
+                gradient: "from-secondary to-primary",
+              },
+              {
+                title: "Confidential On-Prem Analytics",
+                desc: "Secure, on-premise AI solutions for regulated industries requiring strict data privacy compliance.",
+                gradient: "from-primary to-secondary",
+              },
+              {
+                title: "Predictive Supply Chain Intelligence",
+                desc: "Machine learning models that forecast demand, optimize inventory, and reduce operational costs.",
+                gradient: "from-secondary to-primary",
+              },
+              {
+                title: "Immersive Team Training",
+                desc: "Collaborative VR environments for enterprise training, simulations, and skill development.",
+                gradient: "from-primary to-secondary",
+              },
+              {
+                title: "Smart Energy Management",
+                desc: "AI-driven optimization for renewable energy grids, maximizing efficiency and reducing waste.",
+                gradient: "from-secondary to-primary",
+              },
+            ].map((innovation, index) => (
+              <div
+                key={index}
+                className="innovation-card glass-strong rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 group cursor-pointer"
+              >
+                <div
+                  className={`w-16 h-16 rounded-xl bg-gradient-to-br ${innovation.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}
+                >
+                  <svg
+                    className="w-8 h-8 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-serif font-semibold mb-3">{innovation.title}</h3>
+                <p className="text-muted-foreground mb-4">{innovation.desc}</p>
+                <span className="inline-flex items-center text-primary font-medium group-hover:gap-2 transition-all">
+                  Explore
+                  <svg
+                    className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10"></div>
+          <div
+            className="particle"
+            style={{ left: "20%", top: "30%", animationDelay: "1s" }}
+          ></div>
+          <div
+            className="particle"
+            style={{ left: "70%", top: "60%", animationDelay: "3s" }}
+          ></div>
+          <div
+            className="particle"
+            style={{ left: "40%", top: "80%", animationDelay: "5s" }}
+          ></div>
+        </div>
+
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold mb-6">
+            Let's Build Something Phenomenal
+          </h2>
+          <p className="text-xl text-muted-foreground mb-10 max-w-3xl mx-auto">
+            Transform your vision into reality with AI-powered solutions designed for lasting
+            impact
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/contact">
+              <a
+                className="px-10 py-4 bg-primary text-primary-foreground rounded-lg font-semibold text-lg hover:bg-primary/90 transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
+                data-testid="button-start-project"
+              >
+                Start Your Project
+              </a>
+            </Link>
+            <Link href="/about">
+              <a
+                className="px-10 py-4 glass-strong border border-border text-foreground rounded-lg font-semibold text-lg hover:bg-white/10 transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
+                data-testid="button-learn-about"
+              >
+                Learn About Us
+              </a>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}
