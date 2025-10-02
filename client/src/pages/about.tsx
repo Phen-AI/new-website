@@ -11,27 +11,74 @@ export default function About() {
   const [selectedMember, setSelectedMember] = useState<typeof teamMembers[0] | null>(null);
 
   useGSAP(() => {
-    if (!window.gsap) return;
+    if (!window.gsap || !window.ScrollTrigger) {
+      return;
+    }
 
-    window.gsap.from(".timeline-item", {
-      opacity: 0,
-      x: -50,
-      stagger: 0.2,
-      scrollTrigger: {
-        trigger: ".timeline-item",
-        start: "top 80%",
-      },
-    });
+    const tweens: any[] = [];
+    const timelineItems = window.gsap.utils?.toArray?.(".timeline-item") as
+      | HTMLElement[]
+      | undefined;
 
-    window.gsap.from(".team-card", {
-      opacity: 0,
-      scale: 0.9,
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".team-card",
-        start: "top 80%",
-      },
-    });
+    if (timelineItems?.length) {
+      timelineItems.forEach((item, index) => {
+        const tween = window.gsap.fromTo(
+          item,
+          { opacity: 0, x: -50 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.8,
+            delay: index * 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: item,
+              start: "top 85%",
+              once: true,
+            },
+            onComplete: () =>
+              window.gsap.set(item, { clearProps: "opacity,transform" }),
+          }
+        );
+
+        tweens.push(tween);
+      });
+    }
+
+    const teamCards = window.gsap.utils?.toArray?.(".team-card") as
+      | HTMLElement[]
+      | undefined;
+
+    if (teamCards?.length) {
+      teamCards.forEach((card) => {
+        const tween = window.gsap.fromTo(
+          card,
+          { opacity: 0, scale: 0.9 },
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 0.6,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              once: true,
+            },
+            onComplete: () =>
+              window.gsap.set(card, { clearProps: "opacity,transform" }),
+          }
+        );
+
+        tweens.push(tween);
+      });
+    }
+
+    return () => {
+      tweens.forEach((tween) => {
+        tween?.scrollTrigger?.kill?.();
+        tween?.kill?.();
+      });
+    };
   }, []);
 
   const timeline = [

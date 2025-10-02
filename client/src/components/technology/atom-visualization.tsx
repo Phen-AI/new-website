@@ -3,6 +3,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { checkReducedMotion } from "@/lib/gsap-utils";
 
+const NUCLEUS_LOGO_SRC = new URL(
+  "../../../../attached_assets/Green_logo.png",
+  import.meta.url
+).href;
+
 const techData = {
   "ai-ml": {
     title: "AI & Machine Learning",
@@ -37,11 +42,11 @@ const techData = {
 };
 
 const particles = [
-  { id: "ai-ml", label: "AI & ML", duration: 20, delay: 0 },
-  { id: "data-engineering", label: "Data Engineering", duration: 25, delay: 0 },
-  { id: "vr-ar", label: "VR/AR", duration: 30, delay: 0 },
-  { id: "computer-vision", label: "Computer Vision", duration: 22, delay: 0 },
-  { id: "on-prem-ai", label: "On-Prem AI", duration: 28, delay: 0 },
+  { id: "ai-ml", label: "AI & ML", duration: 20, delay: 0, radius: 180 },
+  { id: "data-engineering", label: "Data Engineering", duration: 25, delay: 2, radius: 220 },
+  { id: "vr-ar", label: "VR/AR", duration: 30, delay: 1, radius: 260 },
+  { id: "computer-vision", label: "Computer Vision", duration: 22, delay: 3, radius: 210 },
+  { id: "on-prem-ai", label: "On-Prem AI", duration: 28, delay: 1.5, radius: 240 },
 ];
 
 export default function AtomVisualization() {
@@ -69,21 +74,13 @@ export default function AtomVisualization() {
     <div className="relative flex items-center justify-center" style={{ height: "600px" }}>
       {/* Nucleus - Phen AI Logo */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-        <div className="w-32 h-32 rounded-full glass-strong flex items-center justify-center animate-float">
-          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-            <svg
-              className="w-10 h-10 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M13 10V3L4 14h7v7l9-11h-7z"
-              />
-            </svg>
+        <div className="w-36 h-36 rounded-full glass-strong flex items-center justify-center animate-float">
+          <div className="w-28 h-28 rounded-full overflow-hidden bg-background">
+            <img
+              src={NUCLEUS_LOGO_SRC}
+              alt="Phen AI nucleus"
+              className="w-full h-full object-contain"
+            />
           </div>
         </div>
       </div>
@@ -91,43 +88,65 @@ export default function AtomVisualization() {
       {/* Orbiting Particles */}
       <div className="relative w-full h-full">
         {particles.map((particle, index) => {
-          const angle = (index * 360) / particles.length;
+          const baseAngle = (index * 360) / particles.length;
+          const animated = !reducedMotion && !isPaused;
+
+          const orbitAnimation = animated
+            ? {
+                animate: { rotate: baseAngle + 360 },
+                transition: {
+                  duration: particle.duration,
+                  repeat: Infinity,
+                  ease: "linear",
+                  delay: particle.delay,
+                },
+              }
+            : {
+                animate: { rotate: baseAngle },
+                transition: {},
+              };
+
+          const counterRotation = animated
+            ? {
+                animate: { rotate: -baseAngle - 360 },
+                transition: {
+                  duration: particle.duration,
+                  repeat: Infinity,
+                  ease: "linear",
+                  delay: particle.delay,
+                },
+              }
+            : {
+                animate: { rotate: -baseAngle },
+                transition: {},
+              };
+
           return (
             <div
               key={particle.id}
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             >
               <motion.div
-                animate={
-                  !reducedMotion && !isPaused
-                    ? {
-                        rotate: 360,
-                      }
-                    : {}
-                }
-                transition={
-                  !reducedMotion && !isPaused
-                    ? {
-                        duration: particle.duration,
-                        repeat: Infinity,
-                        ease: "linear",
-                        delay: particle.delay,
-                      }
-                    : {}
-                }
-                style={{
-                  transform: `rotate(${angle}deg) translateX(250px) rotate(-${angle}deg)`,
-                }}
+                className="relative"
+                initial={{ rotate: baseAngle }}
+                {...orbitAnimation}
               >
-                <button
-                  onClick={() => handleParticleClick(particle.id)}
-                  className="glass-strong px-6 py-3 rounded-full cursor-pointer hover:scale-110 transition-transform group focus:outline-none focus:ring-2 focus:ring-ring"
-                  data-testid={`particle-${particle.id}`}
+                <motion.div
+                  className="absolute top-1/2 left-1/2 -translate-y-1/2"
+                  style={{ x: particle.radius }}
+                  initial={{ rotate: -baseAngle }}
+                  {...counterRotation}
                 >
-                  <span className="text-sm font-semibold whitespace-nowrap">
-                    {particle.label}
-                  </span>
-                </button>
+                  <button
+                    onClick={() => handleParticleClick(particle.id)}
+                    className="glass-strong px-6 py-3 rounded-full cursor-pointer hover:scale-110 transition-transform group focus:outline-none focus:ring-2 focus:ring-ring"
+                    data-testid={`particle-${particle.id}`}
+                  >
+                    <span className="text-sm font-semibold whitespace-nowrap">
+                      {particle.label}
+                    </span>
+                  </button>
+                </motion.div>
               </motion.div>
             </div>
           );

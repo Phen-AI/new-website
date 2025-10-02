@@ -41,14 +41,19 @@ const ensureGSAP = async () => {
   return gsapLoader;
 };
 
-export function useGSAP(callback: () => void, dependencies: any[] = []) {
+export function useGSAP(
+  callback: () => void | (() => void),
+  dependencies: any[] = []
+) {
   useEffect(() => {
     let cancelled = false;
+    let cleanup: void | (() => void);
 
     ensureGSAP()
       ?.then(() => {
         if (!cancelled && window.gsap && window.ScrollTrigger) {
-          callback();
+          cleanup = callback();
+          window.ScrollTrigger.refresh?.();
         }
       })
       .catch((error) => {
@@ -57,6 +62,9 @@ export function useGSAP(callback: () => void, dependencies: any[] = []) {
 
     return () => {
       cancelled = true;
+      if (typeof cleanup === "function") {
+        cleanup();
+      }
     };
   }, dependencies);
 }

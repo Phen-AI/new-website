@@ -7,17 +7,46 @@ import { useGSAP } from "@/lib/gsap-utils";
 
 export default function IndustriesIndex() {
   useGSAP(() => {
-    if (!window.gsap) return;
+    if (!window.gsap || !window.ScrollTrigger) {
+      return;
+    }
 
-    window.gsap.from(".industry-card", {
-      opacity: 0,
-      y: 50,
-      stagger: 0.15,
-      scrollTrigger: {
-        trigger: ".industry-card",
-        start: "top 80%",
-      },
-    });
+    const tweens: any[] = [];
+    const cards = window.gsap.utils?.toArray?.(".industry-card") as
+      | HTMLElement[]
+      | undefined;
+
+    if (cards?.length) {
+      cards.forEach((card, index) => {
+        const tween = window.gsap.fromTo(
+          card,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            delay: index * 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              once: true,
+            },
+            onComplete: () =>
+              window.gsap.set(card, { clearProps: "opacity,transform" }),
+          }
+        );
+
+        tweens.push(tween);
+      });
+    }
+
+    return () => {
+      tweens.forEach((tween) => {
+        tween?.scrollTrigger?.kill?.();
+        tween?.kill?.();
+      });
+    };
   }, []);
 
   return (

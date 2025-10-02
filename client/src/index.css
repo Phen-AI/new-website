@@ -219,18 +219,19 @@
 
 .gap-reveal-bg {
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 100%;
+  width: 110%;
+  height: 420px;
   background-size: cover;
   background-position: center;
-  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translate(-50%, -50%) scale(0.6);
+  transform-origin: center;
+  border-radius: 3rem;
 }
 
 .gap-reveal.revealed .gap-reveal-bg {
-  width: 100%;
+  transform: translate(-50%, -50%) scale(1.2);
 }
 
 /* Mobile menu animation */

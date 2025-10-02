@@ -12,6 +12,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 
+const CONTACT_VIDEO_SRC = new URL("../../../attached_assets/JJL.mp4", import.meta.url).href;
+
 const contactFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
@@ -105,13 +107,8 @@ export default function Contact() {
                   muted
                   playsInline
                   className="w-full h-full object-cover"
-                  poster="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=800&fit=crop"
-                >
-                  <source
-                    src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
-                    type="video/mp4"
-                  />
-                </video>
+                  src={CONTACT_VIDEO_SRC}
+                />
                 <div className="absolute bottom-4 right-4">
                   <button
                     onClick={() => {
@@ -311,10 +308,10 @@ export default function Contact() {
               <Mail className="w-10 h-10 text-primary mb-4" />
               <h3 className="font-semibold mb-2">Email</h3>
               <a
-                href="mailto:hello@phenai.com"
+                href="mailto:info@hiphen.ai"
                 className="text-muted-foreground hover:text-primary transition-colors"
               >
-                hello@phenai.com
+                info@hiphen.ai
               </a>
             </motion.div>
 
@@ -328,10 +325,10 @@ export default function Contact() {
               <Phone className="w-10 h-10 text-primary mb-4" />
               <h3 className="font-semibold mb-2">Phone</h3>
               <a
-                href="tel:+1234567890"
+                href="tel:+14378891457"
                 className="text-muted-foreground hover:text-primary transition-colors"
               >
-                +1 (234) 567-890
+                +1 (437) 889-1457
               </a>
             </motion.div>
 
@@ -345,9 +342,9 @@ export default function Contact() {
               <MapPin className="w-10 h-10 text-primary mb-4" />
               <h3 className="font-semibold mb-2">Address</h3>
               <p className="text-muted-foreground">
-                123 Innovation Drive
+                Ontario, Canada
                 <br />
-                San Francisco, CA 94102
+                Proudly Canadian 
               </p>
             </motion.div>
 
@@ -361,31 +358,15 @@ export default function Contact() {
               <Clock className="w-10 h-10 text-primary mb-4" />
               <h3 className="font-semibold mb-2">Business Hours</h3>
               <p className="text-muted-foreground">
-                Mon - Fri: 9AM - 6PM PST
+                Mon - Fri: 9AM - 6PM EST
                 <br />
                 Weekend: By Appointment
               </p>
             </motion.div>
           </div>
 
-          {/* Map */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="rounded-2xl overflow-hidden h-[400px]"
-          >
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019301092296!2d-122.41941508468194!3d37.77492977975903!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c6c8f4459%3A0xb10ed6d9b5050fa5!2sSan%20Francisco%2C%20CA%2094102!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Phen AI Office Location"
-            ></iframe>
-          </motion.div>
+      
+          
         </div>
       </main>
 
