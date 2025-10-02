@@ -13,28 +13,36 @@ const heroTexts = [
 
 const galleryImages = [
   {
-    front: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=500&fit=crop",
+    front: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=320&h=420&fit=crop",
     back: "AI & Machine Learning",
   },
   {
-    front: "https://images.unsplash.com/photo-1617802690658-1173a812650d?w=400&h=500&fit=crop",
+    front: "https://images.unsplash.com/photo-1617802690658-1173a812650d?w=320&h=420&fit=crop",
     back: "VR/AR Experiences",
   },
   {
-    front: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=500&fit=crop",
+    front: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=320&h=420&fit=crop",
     back: "Data Engineering",
   },
   {
-    front: "https://images.unsplash.com/photo-1535378917042-10a22c95931a?w=400&h=500&fit=crop",
+    front: "https://images.unsplash.com/photo-1535378917042-10a22c95931a?w=320&h=420&fit=crop",
     back: "Computer Vision",
   },
   {
-    front: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=500&fit=crop",
+    front: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=320&h=420&fit=crop",
     back: "On-Prem AI Solutions",
   },
   {
-    front: "https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=400&h=500&fit=crop",
+    front: "https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=320&h=420&fit=crop",
     back: "Custom Automation",
+  },
+  {
+    front: "https://images.unsplash.com/photo-1581090700227-1e37b190418e?w=320&h=420&fit=crop",
+    back: "Edge AI Devices",
+  },
+  {
+    front: "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?w=320&h=420&fit=crop",
+    back: "Analytics Dashboards",
   },
 ];
 
@@ -57,14 +65,17 @@ export default function HeroGallery() {
     return () => clearInterval(interval);
   }, [currentIndex, reducedMotion]);
 
-  const positions = [
-    { rotate: 0, translateY: -280 },
-    { rotate: 60, translateY: -280 },
-    { rotate: 120, translateY: -280 },
-    { rotate: 180, translateY: -280 },
-    { rotate: 240, translateY: -280 },
-    { rotate: 300, translateY: -280 },
-  ];
+  const cardSize = 110;
+  const radiusX = 320;
+  const radiusY = 260;
+  const positions = galleryImages.map((_, index) => {
+    const angle = (-2 * Math.PI * index) / galleryImages.length - Math.PI / 2;
+    return {
+      x: Math.cos(angle) * radiusX,
+      y: Math.sin(angle) * radiusY,
+      rotate: Math.sin(angle) * 12,
+    };
+  });
 
   return (
     <div className="relative w-full max-w-4xl mx-auto mb-16" style={{ height: "600px" }}>
@@ -102,46 +113,48 @@ export default function HeroGallery() {
 
       {/* Orbiting Cards */}
       <div className="relative w-full h-full">
-        {galleryImages.map((image, index) => {
-          const pos = positions[index];
-          return (
-            <div
-              key={index}
-              className="flip-card absolute"
-              style={{
-                width: "180px",
-                height: "240px",
-                top: "50%",
-                left: "50%",
-                marginLeft: "-90px",
-                marginTop: "-120px",
-                transform: `rotate(${pos.rotate}deg) translateY(${pos.translateY}px) rotate(-${pos.rotate}deg)`,
-              }}
-            >
+        <div
+          className="hero-orbit absolute inset-0"
+          style={reducedMotion ? { animationPlayState: "paused" } : undefined}
+        >
+          {galleryImages.map((image, index) => {
+            const pos = positions[index];
+            return (
               <div
-                className={`flip-card-inner ${
-                  flippedCard === index ? "transform rotateY-180" : ""
-                }`}
+                key={index}
+                className="flip-card absolute rounded-[32px] shadow-lg overflow-hidden"
                 style={{
-                  transform: flippedCard === index ? "rotateY(180deg)" : "rotateY(0deg)",
+                  width: `${cardSize}px`,
+                  height: `${cardSize}px`,
+                  top: "50%",
+                  left: "50%",
+                  transform: `translate(-50%, -50%) translate(${pos.x}px, ${pos.y}px) rotate(${pos.rotate}deg)`,
                 }}
               >
-                <div className="flip-card-front glass-strong">
-                  <img
-                    src={image.front}
-                    alt={`Gallery ${index + 1}`}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="flip-card-back glass-strong flex items-center justify-center p-4">
-                  <p className="text-sm font-medium text-center">{image.back}</p>
+                <div
+                  className={`flip-card-inner ${
+                    flippedCard === index ? "transform rotateY-180" : ""
+                  }`}
+                  style={{
+                    transform: flippedCard === index ? "rotateY(180deg)" : "rotateY(0deg)",
+                  }}
+                >
+                  <div className="flip-card-front glass-strong rounded-[32px] overflow-hidden">
+                    <img
+                      src={image.front}
+                      alt={`Gallery ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flip-card-back glass-strong flex items-center justify-center p-4 rounded-[32px]">
+                    <p className="text-sm font-medium text-center">{image.back}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
-
       {/* Pagination Dots */}
       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex gap-2">
         {heroTexts.map((_, index) => (
@@ -159,3 +172,7 @@ export default function HeroGallery() {
     </div>
   );
 }
+
+
+
+

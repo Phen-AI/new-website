@@ -31,7 +31,8 @@ export default function Landing() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-gradient-to-b from-background via-background/95 to-background">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(96,165,250,0.18),transparent_65%)] pointer-events-none"></div>
         {/* Background particles */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="particle" style={{ left: "10%", top: "20%", animationDelay: "0s" }}></div>
@@ -389,5 +390,7 @@ export default function Landing() {
     </div>
   );
 }
+
+
 
 
