@@ -102,7 +102,7 @@ export default function Footer() {
                   className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
                 >
                   <Mail className="w-5 h-5" />
-                  hello@phenai.com
+                  info@hiphen.ai
                 </a>
               </li>
               <li>
@@ -111,15 +111,15 @@ export default function Footer() {
                   className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
                 >
                   <Phone className="w-5 h-5" />
-                  +1 (234) 567-890
+                  +1 (437) 889-1457
                 </a>
               </li>
               <li className="text-muted-foreground flex items-start gap-2">
                 <MapPin className="w-5 h-5 mt-0.5" />
                 <span>
-                  123 Innovation Drive
+                  Ontario, Canada
                   <br />
-                  San Francisco, CA 94102
+                  Proudly Canadian
                 </span>
               </li>
             </ul>
