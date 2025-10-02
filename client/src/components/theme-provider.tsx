@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-type Theme = "dark" | "light";
+type Theme = "light" | "dark";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -18,7 +18,7 @@ const ThemeProviderContext = createContext<ThemeProviderState | undefined>(
 
 export function ThemeProvider({
   children,
-  defaultTheme = "dark",
+  defaultTheme = "light",
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(() => {
     const stored = localStorage.getItem("theme");

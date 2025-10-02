@@ -4,7 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <meta name="description" content="We design intelligence you can trust—elegant systems that deliver measurable value. Your engineering partner for lasting impact.">
-    
+    <script>
+      (function () {
+      // default to light on first visit
+      var t = localStorage.getItem('theme') || 'light';
+      document.documentElement.classList.add(t);
+      })();
+    </script>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
