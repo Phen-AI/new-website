@@ -197,6 +197,7 @@
   overflow: hidden;
 }
 
+
 .flip-card-back {
   transform: rotateY(180deg);
 }
@@ -264,14 +265,8 @@
   }
 }
 
-.hero-orbit {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  animation: hero-orbit-spin 28s linear infinite;
-  transform-origin: 50% 50%;
-  will-change: transform;
-}
+
+
 
 @keyframes hero-orbit-spin {
   from {
