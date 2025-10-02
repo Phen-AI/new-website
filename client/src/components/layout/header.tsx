@@ -111,7 +111,7 @@ export default function Header() {
           isMobileMenuOpen ? "open" : ""
         }`}
       >
-        <div className="px-4 py-6 space-y-4">
+        <div className="max-w-7xl mx-auto px-4 py-6 space-y-4">
           {navItems.map((item) => (
             <Link 
               key={item.href} 
@@ -139,4 +139,3 @@ export default function Header() {
     </header>
   );
 }
-
