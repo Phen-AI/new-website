@@ -137,7 +137,7 @@ export default function BlogIndex() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
                     viewport={{ once: true }}
-                    className="blog-post-card glass-strong rounded-xl overflow-hidden hover:bg-white/10 transition-all group cursor-pointer"
+                    className="blog-post-card glass-strong rounded-xl overflow-hidden mb-6 hover:bg-white/10 transition-all group cursor-pointer"
                     data-testid={`card-blog-${post.slug}`}
                   >
                     <div className="md:flex">
