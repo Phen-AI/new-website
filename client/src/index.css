@@ -30,7 +30,7 @@
 
 .light {
   --background: hsl(0, 0%, 100%);
-  --foreground: hsl(220, 40%, 10%);
+  --foreground: hsl(220, 40%, 5%);
   --card: hsl(0, 0%, 98%);
   --card-foreground: hsl(220, 40%, 10%);
   --popover: hsl(0, 0%, 100%);

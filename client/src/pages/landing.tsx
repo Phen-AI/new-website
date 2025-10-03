@@ -193,30 +193,30 @@ export default function Landing() {
                           alt={industry.title}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"></div>
+                        {/* Stronger overlay for light theme; keep background-based in dark */}
+                        <div className="absolute inset-0 bg-gradient-to-t
+                                        from-black/70 via-black/40 to-transparent
+                                        dark:from-background/95 dark:via-background/85"></div>
+
+                        {/* Text block */}
                         <div className="absolute bottom-0 left-0 right-0 p-8">
-                          <h3 className="text-2xl font-serif font-bold mb-2">
+                          <h3 className="text-2xl font-serif font-bold mb-2 text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.55)]">
                             {industry.title}
                           </h3>
-                          <p className="text-muted-foreground mb-4">{industry.tagline}</p>
-                          <span className="inline-flex items-center text-primary font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                            View Industry
-                            <svg
-                              className="w-5 h-5 ml-1"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M9 5l7 7-7 7"
-                              />
-                            </svg>
+                          <p className="text-white/90 mb-4 drop-shadow-[0_1px_1px_rgba(0,0,0,0.45)]">
+                            {industry.tagline}
+                          </p>
+                          <span className="inline-flex items-center text-primary-foreground/90 bg-primary/70
+                                          px-3 py-1.5 rounded-lg font-medium
+                                          opacity-0 group-hover:opacity-100 transition-all">
+                          View Industry
+                          <svg className="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                          </svg>
                           </span>
                         </div>
                       </div>
+
                     </div>
                   </a>
                 </Link>

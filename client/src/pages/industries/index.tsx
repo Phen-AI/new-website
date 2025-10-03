@@ -61,10 +61,11 @@ export default function IndustriesIndex() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold mb-6 text-gray-900 dark:text-gray-100">
               Industries We Transform
             </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-xl max-w-3xl mx-auto text-gray-800 dark:text-gray-200">
+
               Delivering AI-powered innovation across diverse sectors, from agriculture to
               renewable energy
             </p>
@@ -87,13 +88,17 @@ export default function IndustriesIndex() {
                       alt={industry.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent opacity-90 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent dark:from-background/95 dark:via-background/85 opacity-95 group-hover:opacity-100 transition-opacity"></div>
+
                     
                     <div className="absolute bottom-0 left-0 right-0 p-8 transform group-hover:-translate-y-2 transition-transform duration-300">
-                      <h2 className="text-3xl font-serif font-bold mb-3 text-foreground">
+                      <h2 className="text-3xl font-serif font-bold mb-3 text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.55)]">
                         {industry.title}
                       </h2>
-                      <p className="text-muted-foreground mb-4">{industry.tagline}</p>
+                      <p className="mb-4 text-white/90 drop-shadow-[0_1px_1px_rgba(0,0,0,0.45)]">
+                        {industry.tagline}
+                      </p>
+
                       
                       <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <span className="inline-flex items-center text-primary font-semibold">

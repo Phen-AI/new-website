@@ -63,13 +63,14 @@ export default function IndustryDetail() {
               alt={industry.title}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/85 to-transparent"></div>
+
             
             <div className="absolute bottom-0 left-0 right-0 p-12">
               <motion.h1
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-5xl sm:text-6xl font-serif font-bold mb-4"
+                className="text-5xl sm:text-6xl font-serif font-bold mb-4 text-gray-900 dark:text-gray-100 drop-shadow-[0_1px_1px_rgba(0,0,0,0.45)]"
               >
                 {industry.title}
               </motion.h1>
@@ -77,7 +78,7 @@ export default function IndustryDetail() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-2xl text-muted-foreground"
+                className="text-2xl text-gray-100/90 dark:text-gray-50/95"
               >
                 {industry.tagline}
               </motion.p>
@@ -93,7 +94,7 @@ export default function IndustryDetail() {
               className="max-w-4xl"
             >
               <h2 className="text-3xl font-serif font-bold mb-6">Overview</h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-lg text-gray-800 dark:text-gray-200 leading-relaxed">
                 {industry.overview}
               </p>
             </motion.div>
@@ -118,7 +119,7 @@ export default function IndustryDetail() {
                     </div>
                     <div>
                       <h3 className="text-xl font-semibold mb-2">{useCase.title}</h3>
-                      <p className="text-muted-foreground">{useCase.description}</p>
+                      <p className="text-gray-800 dark:text-gray-200">{useCase.description}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -147,7 +148,7 @@ export default function IndustryDetail() {
                     </div>
                     <div className="glass-strong rounded-xl p-6">
                       <h3 className="text-xl font-semibold mb-3">{step.step}</h3>
-                      <p className="text-muted-foreground">{step.description}</p>
+                      <p className="text-gray-800 dark:text-gray-200">{step.description}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -177,7 +178,7 @@ export default function IndustryDetail() {
                     >
                       0
                     </div>
-                    <div className="text-lg text-muted-foreground">{metric.label}</div>
+                    <div className="text-lg text-gray-800 dark:text-gray-200">{metric.label}</div>
                   </motion.div>
                 ))}
               </div>
