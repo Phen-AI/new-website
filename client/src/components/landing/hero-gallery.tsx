@@ -9,13 +9,15 @@ import {
 import { checkReducedMotion } from "@/lib/gsap-utils";
 
 const heroTexts = [
-  "AI, engineered for impact.",
-  "VR/AR that teaches and persuades.",
-  "On-prem intelligence for regulated industries.",
-  "Confident AI. Practical outcomes.",
-  "Vision systems that see what matters.",
-  "Data pipelines that scale with you.",
+  "AI engineered for impact",
+  "VR/AR that inspires learning",
+  "On-prem AI for compliance",
+  "Practical AI, predictable results",
+  "Vision systems that matter",
+  "Data pipelines that scale",
 ];
+
+
 
 const IMAGES = [
   { front: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=640&h=640&fit=crop", back: "AI & Machine Learning" },
@@ -77,7 +79,7 @@ export default function HeroGallery() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="mb-6 text-4xl font-serif font-bold leading-tight sm:text-5xl lg:text-6xl"
+            className="mb-6 text-4xl font-serif font-bold leading-tight sm:text-4xl lg:text-4xl"
           >
             {heroTexts[currentIndex]}
           </motion.h1>
@@ -86,14 +88,14 @@ export default function HeroGallery() {
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
           <a
             href="/contact"
-            className="rounded-full bg-primary px-8 py-3.5 font-semibold text-primary-foreground shadow-sm ring-1 ring-black/5 transition-all hover:scale-105 hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
+            className="rounded-full bg-primary px-3 py-2 font-semibold text-primary-foreground shadow-sm ring-1 ring-black/5 transition-all hover:scale-105 hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
             data-testid="button-schedule-consultation"
           >
             Schedule a Consultation
           </a>
           <a
             href="/industries"
-            className="rounded-full bg-white/60 px-8 py-3.5 font-semibold ring-1 ring-black/10 backdrop-blur transition-all hover:scale-105 hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
+            className="rounded-full bg-white/60 px-3 py-2 font-semibold ring-1 ring-black/5 backdrop-blur transition-all hover:scale-105 hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
             data-testid="button-explore-work"
           >
             Explore Our Work
