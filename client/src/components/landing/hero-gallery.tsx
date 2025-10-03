@@ -20,14 +20,13 @@ const heroTexts = [
 
 
 const IMAGES = [
-  { front: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=640&h=640&fit=crop", back: "AI & Machine Learning" },
-  { front: "https://images.unsplash.com/photo-1617802690658-1173a812650d?w=640&h=640&fit=crop", back: "VR/AR Experiences" },
-  { front: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=640&h=640&fit=crop", back: "Data Engineering" },
-  { front: "https://images.unsplash.com/photo-1535378917042-10a22c95931a?w=640&h=640&fit=crop", back: "Computer Vision" },
-  { front: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=640&h=640&fit=crop", back: "On-Prem AI Solutions" },
-  { front: "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?w=640&h=640&fit=crop", back: "Analytics Dashboards" },
-  { front: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=640&h=640&fit=crop", back: "On-Prem AI Solutions" },
-  { front: "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?w=640&h=640&fit=crop", back: "Analytics Dashboards" },
+  { front: "/images/futuristic-ai-concept-art-1.png", back: "AI & Machine Learning"},
+  { front: "/images/person-wearing-vr-headset-1.png", back: "VR/AR Experiences" },
+  { front: "/images/abstract-digital-pipeline-2.png", back: "Data Engineering" },
+  { front: "/images/factory-robots-with-ai-vision-2.png", back: "Computer Vision" },
+  { front: "/images/abstract-digital-pipelines-3.png", back: "On-Prem AI Solutions" },
+  { front: "/images/isometric-3d-futuristic-dashboard-2.png", back: "Analytics Dashboards" },
+  { front: "/images/ai-medical-imaging-scanner-2.png", back: "Computer Vision" },
 ];
 
 export default function HeroGallery() {
