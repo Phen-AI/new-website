@@ -317,22 +317,7 @@ export default function Landing() {
                 </div>
                 <h3 className="text-xl font-serif font-semibold mb-3">{innovation.title}</h3>
                 <p className="text-muted-foreground mb-4">{innovation.desc}</p>
-                <span className="inline-flex items-center text-primary font-medium group-hover:gap-2 transition-all">
-                  Explore
-                  <svg
-                    className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </span>
+                
               </motion.div>
             ))}
           </div>
