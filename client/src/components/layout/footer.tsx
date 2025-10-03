@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { Mail, Phone, MapPin, Linkedin, Twitter, Github } from "lucide-react";
-
+import { Mail, Phone, MapPin, Linkedin, Twitter, Github, Instagram, X } from "lucide-react";
 export default function Footer() {
   const [currentYear, setCurrentYear] = useState(2024);
 
@@ -126,25 +125,25 @@ export default function Footer() {
 
             <div className="flex gap-4 mt-6">
               <a
-                href="#"
+                href="https://www.linkedin.com/company/phen-ai/"
                 className="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
               </a>
               <a
-                href="#"
+                href="https://x.com/hiphenai"
                 className="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
                 aria-label="Twitter"
               >
                 <Twitter className="w-5 h-5" />
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/hiphenai/"
                 className="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
-                aria-label="GitHub"
+                aria-label="Instagram"
               >
-                <Github className="w-5 h-5" />
+                <Instagram className="w-5 h-5" />
               </a>
             </div>
           </div>
