@@ -19,22 +19,16 @@ export default function Footer() {
           {/* Brand Column */}
           <div>
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-                <svg
-                  className="w-6 h-6 text-primary-foreground"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 10V3L4 14h7v7l9-11h-7z"
-                  />
-                </svg>
-              </div>
+              <Link href="/" className="flex items-center space-x-3 cursor-pointer">
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center overflow-hidden">
+              <img
+                   src="/images/logo gif.gif"  // <-- place your GIF in /public and use this path
+                    alt="Phen AI Logo"
+                    className="w-10 h-10 object-contain"
+              />
+            </div>
               <span className="text-xl font-serif font-semibold">Phen AI</span>
+           </Link>
             </div>
             <p className="text-muted-foreground">
               Engineering intelligence you can trust. Delivering elegant systems

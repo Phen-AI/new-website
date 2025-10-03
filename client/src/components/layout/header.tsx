@@ -47,23 +47,15 @@ export default function Header() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 cursor-pointer">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-              <svg
-                className="w-6 h-6 text-primary-foreground"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M13 10V3L4 14h7v7l9-11h-7z"
-                />
-              </svg>
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center overflow-hidden">
+              <img
+                   src="/images/logo gif.gif"  // <-- place your GIF in /public and use this path
+                    alt="Phen AI Logo"
+                    className="w-10 h-10 object-contain"
+              />
             </div>
-            <span className="text-xl font-serif font-semibold">Phen AI</span>
-          </Link>
+              <span className="text-xl font-serif font-semibold">Phen AI</span>
+           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-6">
@@ -82,7 +74,7 @@ export default function Header() {
             <ThemeToggle />
             <Link 
               href="/contact"
-              className="px-6 py-2.5 bg-primary text-primary-foreground rounded-lg font-medium text-sm hover:bg-primary/90 transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
+              className="px-6 py-2.5 bg-primary text-black rounded-lg font-medium text-sm hover:bg-primary/90 transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
               data-testid="button-contact"
             >
               Contact Us

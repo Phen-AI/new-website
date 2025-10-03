@@ -74,13 +74,13 @@ export default function AtomVisualization() {
     <div className="relative flex items-center justify-center" style={{ height: "600px" }}>
       {/* Nucleus - Phen AI Logo */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-        <div className="w-36 h-36 rounded-full glass-strong flex items-center justify-center animate-float">
-          <div className="w-28 h-28 rounded-full overflow-hidden bg-background">
+        <div className="w-36 h-36 rounded-full glass-strong flex items-center justify-center animate-float" style={{ backgroundColor: "black" }}>
+          <div className="w-28 h-28 rounded-full overflow-hidden flex items-center justify-center" style={{ backgroundColor: "#22d3a3" }}>
             <img
-              src={NUCLEUS_LOGO_SRC}
-              alt="Phen AI nucleus"
-              className="w-full h-full object-contain"
-            />
+                   src="/images/logo gif.gif"  // <-- place your GIF in /public and use this path
+                    alt="Phen AI Logo"
+                    className="w-full h-full object-contain"
+              />
           </div>
         </div>
       </div>

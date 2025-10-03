@@ -87,7 +87,7 @@ export default function HeroGallery() {
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
           <a
             href="/contact"
-            className="rounded-full bg-primary px-3 py-2 font-semibold text-primary-foreground shadow-sm ring-1 ring-black/5 transition-all hover:scale-105 hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
+            className="rounded-full bg-primary px-3 py-2 font-semibold text-black shadow-sm ring-1 ring-black/5 transition-all hover:scale-105 hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
             data-testid="button-schedule-consultation"
           >
             Schedule a Consultation
