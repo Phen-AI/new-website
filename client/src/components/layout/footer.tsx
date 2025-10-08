@@ -20,11 +20,11 @@ export default function Footer() {
           <div>
             <div className="flex items-center space-x-3 mb-4">
               <Link href="/" className="flex items-center space-x-3 cursor-pointer">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center overflow-hidden">
+            <div className=" flex items-center justify-center overflow-hidden">
               <img
-                   src="/images/logo gif.gif"  // <-- place your GIF in /public and use this path
+                   src="/images/12.gif"  // <-- place your GIF in /public and use this path
                     alt="Phen AI Logo"
-                    className="w-10 h-10 object-contain"
+                    className="w-16 h-16 object-contain"
               />
             </div>
               <span className="text-xl font-serif font-semibold">Phen AI</span>

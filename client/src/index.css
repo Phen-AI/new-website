@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+
+.canvas-abs { position: absolute; inset: 0; }
+
 :root {
   --background: hsl(220, 40%, 5%);
   --foreground: hsl(210, 40%, 98%);

@@ -1,199 +1,282 @@
-import { useState, useEffect } from "react";
-import {
-  motion,
-  AnimatePresence,
-  animate,
-  useMotionValue,
-  useTransform,
-} from "framer-motion";
-import { checkReducedMotion } from "@/lib/gsap-utils";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
-const heroTexts = [
-  "AI engineered for impact",
-  "VR/AR that inspires learning",
-  "On-prem AI for compliance",
-  "Practical AI, predictable results",
-  "Vision systems that matter",
-  "Data pipelines that scale",
-];
-
-
+/* -------- Headline & Assets -------- */
+const heroTexts = ["Phen AI", "Phenonenal AI"];
 
 const IMAGES = [
-  { front: "/images/futuristic-ai-concept-art-1.png", back: "AI & Machine Learning"},
-  { front: "/images/person-wearing-vr-headset-1.png", back: "VR/AR Experiences" },
-  { front: "/images/abstract-digital-pipeline-2.png", back: "Data Engineering" },
-  { front: "/images/factory-robots-with-ai-vision-2.png", back: "Computer Vision" },
-  { front: "/images/abstract-digital-pipelines-3.png", back: "On-Prem AI Solutions" },
-  { front: "/images/isometric-3d-futuristic-dashboard-2.png", back: "Analytics Dashboards" },
-  { front: "/images/ai-medical-imaging-scanner-2.png", back: "Computer Vision" },
+  "/images/Hero (1).png",
+  "/images/Hero (2).png",
+  "/images/Hero (3).png",
+  "/images/Hero (4).png",
+  "/images/Hero (5).png",
+  "/images/Hero (6).png",
+  "/images/Hero (7).png",
+  "/images/Hero (8).png",
 ];
 
+declare global {
+  interface Window {
+    gsap?: any;
+  }
+}
+
+/** Prefers-reduced-motion */
+function usePrefersReducedMotion(): boolean {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handler = (e: MediaQueryListEvent | MediaQueryList) =>
+      setReduced("matches" in e ? e.matches : (e as MediaQueryList).matches);
+    handler(mql);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+  return reduced;
+}
+
+/** 270° clockwise arc with fade-in/out windows */
+function getArcState(
+  t: number,
+  rx: number,
+  ry: number,
+  depth: number
+): { x: number; y: number; scale: number; opacity: number; z: number } {
+  const angle = Math.PI / 4 + (3 * Math.PI * t) / 2; // 45° → 315°
+  const x = rx * Math.cos(angle);
+  const y = ry * Math.sin(angle);
+
+  const scale = 1 - depth * 0.05;
+
+  let opacity = 1;
+  if (t < 0.05) opacity = 0;
+  else if (t < 0.1) opacity = (t - 0.05) / 0.05;
+  else if (t > 0.9) opacity = (1 - t) / 0.1;
+  opacity *= 1;
+
+  const z = -200 * depth;
+  return { x, y, scale, opacity, z };
+}
+
 export default function HeroGallery() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [flippedCard, setFlippedCard] = useState<number | null>(null);
-  const reducedMotion = checkReducedMotion();
+  const reduced = usePrefersReducedMotion();
+  const stageRef = useRef<HTMLDivElement>(null);
 
-  // Headline auto-cycler
+  const [headline, setHeadline] = useState(0);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  // Headline auto-cycle
   useEffect(() => {
-    if (reducedMotion) return;
-    const id = setInterval(() => {
-      setFlippedCard(currentIndex);
-      setTimeout(() => {
-        setCurrentIndex((p) => (p + 1) % heroTexts.length);
-        setFlippedCard(null);
-      }, 800);
-    }, 4000);
+    if (reduced) return;
+    const id = setInterval(
+      () => setHeadline((i) => (i + 1) % heroTexts.length),
+      3800
+    );
     return () => clearInterval(id);
-  }, [currentIndex, reducedMotion]);
+  }, [reduced]);
 
-  // ----- Orbit ring rotation (keeps tiles upright via counter-rotation) -----
-  const ringRotation = useMotionValue(0);
+  // Recompute on resize
   useEffect(() => {
-    if (reducedMotion) return;
-    const controls = animate(ringRotation, 360, {
-      duration: 40,
-      ease: "linear",
-      repeat: Infinity,
+    if (reduced) return;
+    let raf = 0;
+    const onResize = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => setRefreshKey((k) => k + 1));
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      cancelAnimationFrame(raf);
+    };
+  }, [reduced]);
+
+  useLayoutEffect(() => {
+    const stage = stageRef.current;
+    if (!stage || reduced) return;
+
+    const gsap = window.gsap;
+    const tiles = Array.from(
+      stage.querySelectorAll<HTMLDivElement>(".orbit-tile")
+    );
+
+    // Bigger images (↑ size) and slightly larger ellipse
+    const CARD = 200;
+    tiles.forEach((el) => {
+      const depth = Number(el.dataset.depth || 0);
+      const size = CARD + depth * 28; // was +20
+      el.style.width = `${size}px`;
+      el.style.height = `${size}px`;
     });
-    return () => controls.stop();
-  }, [ringRotation, reducedMotion]);
 
-  // Layout constants
-  const CARD = 120;          // tile size in px
-  const RADIUS = 260;        // distance from center in px
-  const CENTER_FRAME_W = "min(1100px, 95vw)"; // keeps ring nicely within hero
+    // Responsive ellipse radii
+    const vw = window.innerWidth;
+    const rx = Math.max(340, Math.min(vw * 0.40, 720)); // ↑ radius
+    const ry = Math.max(200, Math.min(rx * 0.40, 340));
 
-  // Precompute base angles for each tile
-  const angles = IMAGES.map((_, i) => (i / IMAGES.length) * 360); // 0..360
+    // Timing
+    const duration = 2; // seconds per 270° path
+    const PAUSE = 2;    // <-- 2s delay after each rotation
+
+    // Prime at t=0
+    tiles.forEach((el) => {
+      const depth = Number(el.dataset.depth || 0);
+      const start = getArcState(0, rx, ry, depth);
+      el.style.left = "50%";
+      el.style.top = "50%";
+      el.style.opacity = String(start.opacity);
+      el.style.zIndex = String(1000 - depth);
+      el.style.transform = `translate(-50%, -50%) translate3d(${start.x}px, ${start.y}px, ${start.z}px) scale(${start.scale})`;
+      (el.style as any).willChange = "transform, opacity";
+    });
+
+    if (gsap) {
+      const timelines: any[] = [];
+      tiles.forEach((el, i) => {
+        const depth = Number(el.dataset.depth || 0);
+        const delay = (i * duration) / tiles.length;
+
+        const tl = gsap.timeline({
+          repeat: -1,
+          delay,
+          repeatDelay: PAUSE, // <-- pause after each loop
+          defaults: { ease: "none" },
+        });
+
+        tl.to(el, {
+          duration,
+          onUpdate() {
+            const t = tl.progress(); // 0→1 during the active segment
+            const s = getArcState(t, rx, ry, depth);
+            gsap.set(el, {
+              x: s.x,
+              y: s.y,
+              z: s.z,
+              scale: s.scale,
+              opacity: s.opacity,
+              xPercent: -50,
+              yPercent: -50,
+            });
+          },
+        });
+
+        timelines.push(tl);
+      });
+
+      return () => timelines.forEach((tl) => tl.kill());
+    } else {
+      // rAF fallback with pause handling
+      let raf = 0;
+      const startTS = performance.now();
+      const cycle = duration + PAUSE;
+
+      const step = (now: number) => {
+        const elapsed = (now - startTS) / 1000;
+
+        tiles.forEach((el, i) => {
+          const depth = Number(el.dataset.depth || 0);
+          const localOffset = (i * duration) / tiles.length;
+          // phase in [0, cycle)
+          let phase = (elapsed - localOffset) % cycle;
+          if (phase < 0) phase += cycle;
+
+          if (phase >= duration) {
+            // In the pause window: hold at end (t=1), fully faded
+            const s = getArcState(1, rx, ry, depth);
+            el.style.opacity = "0";
+            el.style.zIndex = String(1000 - depth);
+            el.style.transform = `translate(-50%, -50%) translate3d(${s.x}px, ${s.y}px, ${s.z}px) scale(${s.scale})`;
+          } else {
+            // Active motion 0..duration
+            const t = phase / duration;
+            const s = getArcState(t, rx, ry, depth);
+            el.style.opacity = String(s.opacity);
+            el.style.zIndex = String(1000 - depth);
+            el.style.transform = `translate(-50%, -50%) translate3d(${s.x}px, ${s.y}px, ${s.z}px) scale(${s.scale})`;
+          }
+        });
+
+        raf = requestAnimationFrame(step);
+      };
+
+      raf = requestAnimationFrame(step);
+      return () => cancelAnimationFrame(raf);
+    }
+  }, [reduced, refreshKey]);
+
+  const layers = [0, 1, 2]; // 0=front, 2=back
 
   return (
-    <div className="relative mx-auto mb-16 w-full max-w-6xl" style={{ height: 640 }}>
-      {/* Center Headline + CTAs (above tiles) */}
-      <div className="absolute left-1/2 top-1/2 z-10 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 px-4 text-center">
-        <AnimatePresence mode="wait">
-          <motion.h1
-            key={currentIndex}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="mb-6 text-4xl font-serif font-bold leading-tight sm:text-4xl lg:text-4xl"
-          >
-            {heroTexts[currentIndex]}
-          </motion.h1>
-        </AnimatePresence>
+    <section className="relative w-screen max-w-none h-[74vh] md:h-[80vh] lg:h-[88vh] overflow-hidden hero-vignette">
+      {/* Orbit layer */}
+      <div
+        key={refreshKey}
+        ref={stageRef}
+        className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center"
+        style={{ perspective: "1400px", transformStyle: "preserve-3d" }}
+      >
+        {IMAGES.map((src, i) => {
+          const depth = layers[i % layers.length];
+          return (
+            <div
+              key={i}
+              className="orbit-tile absolute"
+              data-depth={depth}
+            >
+              {/* Frame removed: no wrapper, no rounded/shadow */}
+              <img src={src} alt="" className="h-full w-full object-cover" />
+            </div>
+          );
+        })}
+      </div>
 
-        <div className="flex flex-col justify-center gap-4 sm:flex-row">
-          <a
-            href="/contact"
-            className="rounded-full bg-primary px-3 py-2 font-semibold text-black shadow-sm ring-1 ring-black/5 transition-all hover:scale-105 hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
-            data-testid="button-schedule-consultation"
-          >
-            Schedule a Consultation
-          </a>
-          <a
-            href="/industries"
-            className="rounded-full bg-white/60 px-3 py-2 font-semibold ring-1 ring-black/5 backdrop-blur transition-all hover:scale-105 hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
-            data-testid="button-explore-work"
-          >
-            Explore Our Work
-          </a>
+      {/* Centered headline + CTAs */}
+      <div className="relative z-10 flex h-full items-center justify-center px-6 text-center">
+        <div className="max-w-4xl">
+          <AnimatePresence mode="wait">
+            <motion.h1
+              key={headline}
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -18 }}
+              transition={{ duration: 0.28 }}
+              className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold leading-tight tracking-tight"
+            >
+              {heroTexts[headline]}
+            </motion.h1>
+          </AnimatePresence>
+
+          <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="/contact"
+              className="rounded-full bg-primary px-5 py-3 font-semibold text-primary-foreground shadow-sm transition-all hover:scale-105 hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+            >
+              Schedule a Consultation
+            </a>
+            <a
+              href="/industries"
+              className="rounded-full bg-white/70 px-5 py-3 font-semibold text-black/80 backdrop-blur transition-all hover:scale-105 hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+            >
+              Explore Our Work
+            </a>
+          </div>
         </div>
       </div>
 
-      {/* Tiles orbit layer behind text */}
-      <div className="pointer-events-none absolute inset-0 z-0">
-        {/* Centered frame for predictable geometry */}
-        <div
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-          style={{ width: `calc(${CENTER_FRAME_W})`, height: 620 }}
-        >
-          {/* Rotating RING (parent) */}
-          <motion.div
-            style={{
-              position: "absolute",
-              left: "50%",
-              top: "50%",
-              width: 0,
-              height: 0,
-              rotate: ringRotation, // ring rotation
-            }}
-          >
-            {/* Tiles positioned around the ring */}
-            {IMAGES.map((img, i) => {
-              const baseAngle = angles[i]; // degrees
-              // Child wrapper: place at angle, translate outwards
-              const wrapperStyle = {
-                position: "absolute" as const,
-                left: "0px",
-                top: "0px",
-                transform: `rotate(${baseAngle}deg) translateX(${RADIUS}px)`,
-                transformOrigin: "0 0",
-              };
-              // Counter-rotate the actual card so it stays upright
-              const counterRotate = useTransform(ringRotation, (v) => -v - baseAngle);
-
-              return (
-                <div key={i} style={wrapperStyle}>
-                  <motion.div style={{ rotate: counterRotate }}>
-                    <div
-                      className="overflow-hidden rounded-[28px] ring-1 ring-black/10 shadow-md bg-white/40 backdrop-blur"
-                      style={{ width: CARD, height: CARD }}
-                    >
-                      <div
-                        className="flip-card-inner"
-                        style={{
-                          transform:
-                            flippedCard === i ? "rotateY(180deg)" : "rotateY(0deg)",
-                          transformStyle: "preserve-3d",
-                          transition: "transform 0.6s",
-                          height: "100%",
-                        }}
-                      >
-                        <div
-                          className="flip-card-front glass-strong"
-                          style={{ backfaceVisibility: "hidden", height: "100%" }}
-                        >
-                          <img
-                            src={img.front}
-                            alt=""
-                            className="h-full w-full object-cover"
-                          />
-                        </div>
-                        <div
-                          className="flip-card-back glass-strong flex h-full items-center justify-center p-4"
-                          style={{
-                            backfaceVisibility: "hidden",
-                            transform: "rotateY(180deg)",
-                          }}
-                        >
-                          <p className="text-center text-sm font-medium">{img.back}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
-              );
-            })}
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Pagination dots */}
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
+      {/* Pagination dots (headline only) */}
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20">
         <div className="flex gap-2">
           {heroTexts.map((_, idx) => (
             <button
               key={idx}
-              onClick={() => setCurrentIndex(idx)}
-              className={`h-2 w-2 rounded-full transition-colors ${idx === currentIndex ? "bg-primary" : "bg-muted"}`}
+              onClick={() => setHeadline(idx)}
+              className={`h-2 w-2 rounded-full transition-colors ${
+                idx === headline ? "bg-primary" : "bg-muted"
+              }`}
               aria-label={`Slide ${idx + 1}`}
-              data-testid={`dot-slide-${idx + 1}`}
             />
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
