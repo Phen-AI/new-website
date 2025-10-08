@@ -16,8 +16,11 @@ export interface Service {
   title: string;
   icon: string;
   summary: string;
+  overview: string;
   included: string[];
+  keyCapabilities: string[];
   process: { step: string; description: string }[];
+  deploymentOptions: string;
   deliverables: string[];
   tools: string[];
 }
@@ -56,9 +59,11 @@ export const industries: Industry[] = [
   {
     slug: "agriculture",
     title: "Agriculture",
-    tagline: "AI-driven crop monitoring and yield optimization",
+    tagline:
+      "AI-powered agriculture solutions for crop monitoring, yield optimization, and smart farming. Boost sustainability and productivity with Phen AI.",
     heroImage: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1920&h=1080&fit=crop",
-    overview: "Transform agricultural operations with computer vision and predictive analytics. Our AI solutions enable early disease detection, optimize irrigation, and maximize crop yields while reducing resource waste.",
+    overview:
+      "At Phen AI, we empower the future of agriculture with AI-driven crop monitoring, computer vision, and predictive analytics. Our intelligent solutions help farmers and agribusinesses improve productivity, reduce costs, and promote sustainable farming practices. By integrating machine learning, IoT-based sensors, and edge AI, we deliver real-time insights on crop health, disease detection, irrigation optimization, and yield forecasting.\n\nFarmers gain the ability to act on data instead of guesswork - ensuring healthier crops, efficient water use, and lower environmental impact. From vineyards and open-field crops to greenhouse systems, Phen AI's agricultural intelligence platform transforms raw farm data into actionable insights. Our AI agriculture solutions drive precision, efficiency, and sustainability - helping every grower maximize yield while minimizing waste. Harness the power of smart farming technology and computer vision in agriculture to achieve data-driven growth, resilient operations, and a greener tomorrow.",
     useCases: [
       { title: "Disease Detection", description: "Early identification of crop diseases through image analysis" },
       { title: "Yield Prediction", description: "Accurate forecasting of harvest outcomes using historical and real-time data" },
@@ -72,7 +77,7 @@ export const industries: Industry[] = [
       { step: "Continuous Learning", description: "Refine models with ongoing data for improved accuracy" }
     ],
     technologies: ["computer-vision", "ai-ml", "data-engineering"],
-    services: ["ai-mvp-development", "custom-automation"],
+    services: ["ai-mvp-development", "app-development"],
     metrics: [
       { label: "Yield Increase", value: "23%" },
       { label: "Resource Savings", value: "31%" },
@@ -82,9 +87,11 @@ export const industries: Industry[] = [
   {
     slug: "ed-tech",
     title: "Ed-Tech",
-    tagline: "Immersive learning experiences that engage and educate",
+    tagline:
+      "Immersive Ed-Tech powered by AI, VR, and AR. Enhance engagement, retention, and skill development with Phen AI's adaptive learning technology.",
     heroImage: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1920&h=1080&fit=crop",
-    overview: "Revolutionize education with immersive VR/AR experiences and adaptive learning systems. Our solutions create engaging, effective training environments that improve retention and accelerate skill development.",
+    overview:
+      "At Phen AI, we're shaping the future of education through immersive VR/AR technology, AI-powered adaptive learning, and data-driven classroom intelligence. Our solutions combine virtual reality, machine learning, and predictive analytics to create personalized and engaging learning experiences that boost retention and accelerate skill development. By integrating AI-driven assessment systems, real-time feedback tools, and interactive 3D environments, we help educators design smarter curriculums that adapt to every learner's pace and performance.\n\nWhether for corporate training, academic institutions, or vocational skill development, Phen AI bridges the gap between learning theory and immersive experience. With Phen AI's Ed-Tech innovations, institutions can transform traditional teaching into experiential learning ecosystems - driving engagement, improving outcomes, and preparing students for the intelligent world ahead.",
     useCases: [
       { title: "VR Training Simulations", description: "Realistic practice environments for complex procedures" },
       { title: "Adaptive Learning Paths", description: "AI-driven personalization of educational content" },
@@ -108,9 +115,11 @@ export const industries: Industry[] = [
   {
     slug: "legal",
     title: "Legal",
-    tagline: "Secure on-premise solutions for document analysis",
+    tagline:
+      "AI-powered legal solutions for document review, compliance, and contract analysis. Secure cloud and on-premise systems built for privacy, speed, and accuracy.",
     heroImage: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1920&h=1080&fit=crop",
-    overview: "Enhance legal research and document review with secure, on-premise AI solutions. Our systems maintain strict confidentiality while accelerating case preparation and contract analysis.",
+    overview:
+      "At Phen AI, we redefine how law firms and legal departments manage document review, case analysis, and compliance through secure, cloud-based and on-premise AI solutions. Our technology combines natural language processing (NLP) and machine learning to automate contract analysis, streamline legal research, and enhance due diligence workflows - while maintaining the highest levels of privacy and accuracy. With AI-powered document intelligence, Phen AI delivers rapid discovery, precise classification, and context-aware summarization of case files, contracts, and correspondence.\n\nFirms can choose between cloud deployment for scalability and accessibility, or on-premise systems for complete data control and compliance with strict confidentiality protocols - ensuring flexibility without compromising security. Whether it's law firm automation, corporate legal review, or regulatory compliance, Phen AI empowers legal professionals to save time, reduce manual workloads, and focus on strategic outcomes. Our hybrid AI framework transforms legal operations through intelligent automation - combining performance, privacy, and adaptability for the modern legal practice.",
     useCases: [
       { title: "Contract Review", description: "Automated analysis of agreements for risks and obligations" },
       { title: "Legal Research", description: "Intelligent search and summarization of case law" },
@@ -124,7 +133,7 @@ export const industries: Industry[] = [
       { step: "Ongoing Support", description: "Provide updates and maintenance while preserving confidentiality" }
     ],
     technologies: ["on-prem-ai", "ai-ml"],
-    services: ["custom-automation"],
+    services: ["app-development"],
     metrics: [
       { label: "Review Speed", value: "10x faster" },
       { label: "Accuracy", value: "96%" },
@@ -134,9 +143,11 @@ export const industries: Industry[] = [
   {
     slug: "finance",
     title: "Finance",
-    tagline: "Predictive analytics and risk assessment tools",
+    tagline:
+      "AI solutions for accountants and firms. Automate document review, reconciliation, and compliance with secure on-premise or cloud-based AI from Phen AI.",
     heroImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&h=1080&fit=crop",
-    overview: "Drive smarter financial decisions with predictive analytics and real-time risk assessment. Our AI systems process vast datasets to identify opportunities and mitigate threats.",
+    overview:
+      "At Phen AI, we empower accounting firms and financial professionals with AI-driven automation, secure document intelligence, and advanced data analytics - available through both on-premise and cloud-based deployments. Our solutions are designed to streamline accounting operations, improve accuracy, and ensure compliance while maintaining full control over sensitive financial data. Using machine learning and natural language processing, our systems intelligently process and analyze financial documents - from invoices and ledgers to tax filings and audit reports.\n\nPhen AI's cloud and on-premise AI solutions accelerate document review, automate data reconciliation, and extract actionable insights to reduce human error and improve decision-making. Whether you're managing complex client portfolios, conducting audits, or handling compliance reviews, Phen AI brings automation that adapts to your infrastructure. With cloud scalability for flexibility and on-premise deployment for confidentiality, accounting firms can choose the model that best fits their security and workflow needs. With Phen AI, accounting professionals gain a trusted AI partner that enhances productivity, preserves privacy, and delivers measurable efficiency - transforming how financial firms operate in a digital-first world.",
     useCases: [
       { title: "Fraud Detection", description: "Real-time identification of suspicious transactions" },
       { title: "Credit Risk Modeling", description: "Accurate assessment of borrower creditworthiness" },
@@ -150,7 +161,7 @@ export const industries: Industry[] = [
       { step: "Deployment", description: "Integrate models into trading and risk platforms" }
     ],
     technologies: ["ai-ml", "data-engineering"],
-    services: ["ai-mvp-development", "custom-automation"],
+    services: ["ai-mvp-development", "app-development"],
     metrics: [
       { label: "Fraud Detection Rate", value: "99.2%" },
       { label: "False Positives", value: "-78%" },
@@ -160,9 +171,11 @@ export const industries: Industry[] = [
   {
     slug: "supply-chain",
     title: "Supply Chain",
-    tagline: "End-to-end visibility and optimization",
+    tagline:
+      "AI solutions for supply chain visibility and optimization. Forecast demand, optimize inventory, and assess supplier risks with cloud or on-premise AI.",
     heroImage: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1920&h=1080&fit=crop",
-    overview: "Optimize supply chain operations with predictive analytics and real-time visibility. Our solutions reduce costs, improve delivery times, and enhance inventory management.",
+    overview:
+      "At Phen AI, we transform supply chain operations through AI-driven analytics, predictive modeling, and real-time visibility - available via secure on-premise systems or scalable cloud platforms. Our technology provides end-to-end insight into logistics, warehousing, and distribution, helping organizations reduce costs, enhance delivery accuracy, and improve operational agility. Our AI supply chain solutions are built around four key pillars: Demand Forecasting - enabling accurate prediction of product demand across regions and seasons; Inventory Optimization - applying smart stocking strategies to minimize holding costs and prevent shortages; Route Optimization - improving delivery planning and logistics coordination for maximum efficiency; Supplier Risk Assessment - proactively identifying vulnerabilities and mitigating disruptions across the supplier network.\n\nBy integrating machine learning, IoT sensors, and real-time data analytics, Phen AI empowers businesses to anticipate challenges, adapt quickly, and make data-driven supply chain decisions. Whether deployed on-premise for data sovereignty or in the cloud for scalability and collaboration, our hybrid AI infrastructure ensures visibility and efficiency from procurement to last-mile delivery. With Phen AI, organizations gain the intelligence to optimize resources, ensure reliability, and build resilient supply chains ready for the future.",
     useCases: [
       { title: "Demand Forecasting", description: "Accurate prediction of product demand across markets" },
       { title: "Inventory Optimization", description: "Smart stocking strategies to reduce holding costs" },
@@ -176,7 +189,7 @@ export const industries: Industry[] = [
       { step: "Integration", description: "Connect to ERP, WMS, and TMS systems" }
     ],
     technologies: ["ai-ml", "data-engineering"],
-    services: ["ai-mvp-development", "custom-automation"],
+    services: ["ai-mvp-development", "app-development"],
     metrics: [
       { label: "Delivery Time Improvement", value: "28%" },
       { label: "Inventory Cost Reduction", value: "35%" },
@@ -186,9 +199,11 @@ export const industries: Industry[] = [
   {
     slug: "renewables",
     title: "Renewables",
-    tagline: "Smart grid management and efficiency optimization",
+    tagline:
+      "AI-powered renewable management using satellite and weather data. Forecast energy output, conserve power, and optimize grid sales via cloud or on-premise AI.",
     heroImage: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1920&h=1080&fit=crop",
-    overview: "Maximize renewable energy production and grid efficiency with AI-powered management systems. Our solutions optimize energy distribution, predict maintenance needs, and reduce operational costs.",
+    overview:
+      "At Phen AI, we help renewable energy operators harness the power of AI-driven weather intelligence and satellite data analytics to forecast, conserve, and distribute energy more efficiently. Our systems enable solar and wind farms to optimize production, reduce wastage, and maximize profitability by predicting when and how to generate, store, or sell energy back to the grid. Powered by machine learning, IoT-based weather sensors, and real-time satellite data, Phen AI delivers precise insights into irradiance, wind velocity, and grid demand trends.\n\nOur platform dynamically balances supply, demand, and storage, ensuring energy is conserved and sold strategically when market and weather conditions align. Available via secure on-premise deployments or scalable cloud platforms, Phen AI's hybrid renewable management system supports grid operators and farm owners in achieving peak operational efficiency, energy reliability, and sustainability. Our AI-powered renewable intelligence includes: Weather-Adaptive Forecasting - using satellite and sensor data to predict solar and wind generation based on atmospheric conditions; Smart Grid Optimization - real-time balancing of stored and generated energy to match grid demand efficiently; Energy Conservation Analytics - AI models that determine the optimal times to store, distribute, or sell energy for maximum ROI; Predictive Maintenance - early detection of performance inefficiencies through data-driven operational monitoring. With Phen AI, renewable farms gain a unified intelligence layer that transforms environmental variability into actionable energy strategies - driving smarter generation and sustainable profitability.",
     useCases: [
       { title: "Energy Forecasting", description: "Predict solar and wind generation based on weather patterns" },
       { title: "Grid Optimization", description: "Balance supply and demand in real-time" },
@@ -202,7 +217,7 @@ export const industries: Industry[] = [
       { step: "Optimization", description: "Continuously refine strategies based on performance" }
     ],
     technologies: ["ai-ml", "data-engineering"],
-    services: ["ai-mvp-development", "custom-automation"],
+    services: ["ai-mvp-development", "app-development"],
     metrics: [
       { label: "Efficiency Gain", value: "24%" },
       { label: "Downtime Reduction", value: "41%" },
@@ -216,14 +231,23 @@ export const services: Service[] = [
     slug: "ai-mvp-development",
     title: "AI-Powered MVP & Product Development",
     icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
-    summary: "Rapid prototyping and full-scale product development leveraging cutting-edge AI technologies to bring your ideas to market faster.",
+    summary:
+      "Build, test, and launch intelligent products from idea to deployment with Phen AI's end-to-end expertise across cloud, data, and applied machine learning.",
+    overview:
+      "At Phen AI, we accelerate innovation by turning ideas into functional, AI-powered products. Our team combines technical research, rapid prototyping, and scalable deployment to help startups and enterprises validate concepts, attract investors, and achieve faster go-to-market success. Whether it is a proof of concept, pilot application, or enterprise-grade platform, we manage the full lifecycle from ideation through continuous optimization.",
     included: [
-      "Requirements analysis and technical feasibility assessment",
-      "AI model selection and customization",
-      "Full-stack development with modern frameworks",
-      "Cloud infrastructure setup and deployment",
-      "User testing and iteration",
-      "Post-launch support and optimization"
+      "Requirements analysis and feasibility assessment - evaluate business goals, technical complexity, and the right AI frameworks for scalable development.",
+      "AI model selection and customization - identify, fine-tune, or train models aligned with your data and performance targets.",
+      "Full-stack development with modern frameworks - develop secure, responsive web and mobile applications using the latest front-end and back-end stacks.",
+      "Cloud infrastructure setup and deployment - implement CI/CD pipelines, scalable architecture, and model hosting on AWS, Azure, or on-prem environments.",
+      "User testing and iteration - validate usability and model performance through real-world testing loops and feedback-driven refinements.",
+      "Post-launch support and optimization - monitor, retrain, and scale your AI product to adapt to evolving user behavior and data trends."
+    ],
+    keyCapabilities: [
+      "End-to-end product lifecycle management from prototype through production",
+      "Multi-modal AI integration covering language, vision, speech, and analytics workloads",
+      "Secure deployment options spanning cloud, hybrid, and on-premise environments",
+      "DevOps and MLOps pipelines that enable continuous delivery and experimentation"
     ],
     process: [
       { step: "Discovery", description: "Deep dive into your vision, target users, and success metrics" },
@@ -233,6 +257,8 @@ export const services: Service[] = [
       { step: "Launch", description: "Deploy to production with monitoring and analytics" },
       { step: "Scale", description: "Enhance features and performance based on usage data" }
     ],
+    deploymentOptions:
+      "Deploy your MVP in the cloud for agility or on-premise for control and data security - our infrastructure approach adapts to your environment.",
     deliverables: [
       "Fully functional MVP or production application",
       "Technical documentation and architecture diagrams",
@@ -246,14 +272,25 @@ export const services: Service[] = [
     slug: "immersive-experiences",
     title: "Immersive Experience Development",
     icon: "M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z",
-    summary: "VR/AR solutions that transform training, education, and customer engagement through realistic, interactive environments.",
+    summary:
+      "In-house VR/AR development by Phen AI. Build immersive, AI-powered training and education experiences with cloud or on-premise deployment options.",
+    overview:
+      "At Phen AI, we create immersive VR and AR experiences that merge creativity, technology, and interactivity. Our in-house team of developers, 3D artists, and AI engineers bring ideas to life through realistic virtual environments built for training, education, simulation, and customer engagement. We design and deliver experiences that feel natural, engaging, and technically seamless, blending AI-driven interaction, multi-sensory feedback, and cross-platform optimization. From virtual classrooms and enterprise simulations to interactive product showcases and spatial storytelling, every experience is crafted to enhance learning, performance, and retention. Whether deploying on Meta Quest, HTC Vive, Apple Vision Pro, or mobile AR platforms, our immersive systems ensure precision, scalability, and measurable engagement through real-time analytics. A full-cycle development process, from concept to deployment, ensures every project is backed by robust infrastructure and creative excellence.",
     included: [
-      "Immersive experience design and storyboarding",
-      "3D modeling and environment creation",
-      "Interactive mechanics and gesture controls",
-      "Multi-platform deployment (VR headsets, AR devices, mobile)",
-      "Performance optimization for smooth rendering",
-      "Analytics and engagement tracking"
+      "Immersive experience design and storyboarding - conceptualize experience flows, narrative structure, and user journeys for engagement.",
+      "3D modeling and environment creation - build high-fidelity virtual spaces and digital twins optimized for realism and interactivity.",
+      "Interactive mechanics and gesture controls - integrate motion tracking, haptics, and AI-powered gesture recognition.",
+      "Multi-platform deployment across VR, AR, and mobile - develop once and deploy to headsets, AR devices, and mobile ecosystems.",
+      "Performance optimization for smooth rendering - achieve high frame rates with optimized shaders, assets, and streaming strategies.",
+      "Analytics and engagement tracking - capture usage insights with AI-driven analytics for performance evaluation."
+    ],
+    keyCapabilities: [
+      "In-house team of VR and AR specialists, 3D artists, and AI engineers",
+      "End-to-end XR pipeline covering concept, design, development, deployment, and analytics",
+      "Multi-user simulation environments and interactive training modules",
+      "Integration with AI services, IoT data, and enterprise systems",
+      "Voice, gesture, and motion-based control systems",
+      "Cloud or on-premise delivery tailored to education, healthcare, and enterprise needs"
     ],
     process: [
       { step: "Concept Development", description: "Define learning objectives and user journey" },
@@ -263,6 +300,8 @@ export const services: Service[] = [
       { step: "Refinement", description: "Polish interactions and optimize performance" },
       { step: "Deployment", description: "Publish to target platforms and app stores" }
     ],
+    deploymentOptions:
+      "Deploy immersive experiences via the cloud for scalable global access or on-premise for privacy-focused institutions and enterprise training facilities.",
     deliverables: [
       "VR/AR application ready for deployment",
       "3D assets and source files",
@@ -273,34 +312,47 @@ export const services: Service[] = [
     tools: ["Unity", "Unreal Engine", "Blender", "C#", "C++", "Oculus SDK", "ARKit", "ARCore"]
   },
   {
-    slug: "custom-automation",
-    title: "Custom Automation & On-Prem AI Solutions",
-    icon: "M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z",
-    summary: "Secure, on-premise AI implementations for regulated industries, ensuring data privacy and compliance without compromising capability.",
+    slug: "app-development",
+    title: "Intelligent Mobile App Development",
+    icon: "M7 2a1 1 0 00-1 1v18a1 1 0 001 1h10a1 1 0 001-1V3a1 1 0 00-1-1H7zm5 18a1 1 0 110 2 1 1 0 010-2z",
+    summary: "App development for iOS and Android by Phen AI. Build, integrate, and deploy intelligent mobile apps with AI-powered functionality and scalable backends.",
+    overview:
+      "At Phen AI, we build intelligent, high-performance mobile applications for iOS and Android that combine sleek design, scalability, and AI-powered functionality. Our in-house team of full-stack developers, UI or UX designers, and automation engineers turn ideas into interactive, production-ready apps that perform seamlessly across platforms. From early-stage startups to enterprise systems, we specialize in developing feature-rich mobile solutions that integrate AI, automation, and cloud connectivity, ensuring superior user experience and long-term maintainability. Whether you're launching an MVP or scaling to millions of users, Phen AI handles everything from concept to deployment with precision and reliability. We build using modern frameworks like Flutter, React Native, and Swift or Kotlin, supported by secure Supabase or Firebase backends, and deploy seamlessly via the App Store and Google Play.",
     included: [
-      "Infrastructure assessment and planning",
-      "Custom AI model development and training",
-      "On-premise deployment and integration",
-      "Security hardening and compliance validation",
-      "Performance tuning and optimization",
-      "Ongoing maintenance and model updates"
+      "Requirements analysis and UI or UX prototyping aligned with your brand",
+      "Cross-platform app development for iOS and Android using Flutter, React Native, or native frameworks",
+      "Backend integration and API development connecting real-time data sources and custom AI models",
+      "AI and automation features including chatbots, personalization, and advanced analytics",
+      "Testing, QA, and performance optimization across devices and network conditions",
+      "App Store and Google Play deployment covering compliance, signing, and rollout strategy"
+    ],
+    keyCapabilities: [
+      "In-house mobile development, design, and AI integration teams",
+      "Cross-platform and native expertise to deliver performant iOS and Android apps",
+      "Seamless integration with Supabase, Firebase, or custom backends",
+      "Secure cloud or on-premise deployment models based on compliance needs",
+      "AI-enhanced experiences spanning recommendations, chat, and intelligent automation",
+      "Scalable architectures that support consumer and enterprise growth"
     ],
     process: [
-      { step: "Security Audit", description: "Review infrastructure and compliance requirements" },
-      { step: "Model Development", description: "Train AI models on your data within secure environment" },
-      { step: "Integration", description: "Connect to existing enterprise systems" },
-      { step: "Testing", description: "Validate accuracy, security, and performance" },
-      { step: "Deployment", description: "Install in production with monitoring" },
-      { step: "Support", description: "Provide updates while maintaining security" }
+      { step: "Discovery and Design", description: "Translate concepts into user-centered wireframes and clickable prototypes." },
+      { step: "Cross-Platform Build", description: "Develop performant mobile experiences with Flutter, React Native, or native stacks." },
+      { step: "Backend and Integrations", description: "Connect Supabase, Firebase, or custom APIs for data, auth, and automation." },
+      { step: "AI Enablement", description: "Embed chatbots, predictions, and intelligent automation tailored to your product." },
+      { step: "Quality Assurance", description: "Execute device, stress, and performance testing to ensure reliability." },
+      { step: "Launch and Iteration", description: "Ship to the App Store and Google Play with CI or CD pipelines and monitoring." }
     ],
+    deploymentOptions:
+      "Deploy apps through cloud-based CI/CD pipelines for rapid iteration or host on-premise APIs when data confidentiality and compliance are paramount.",
     deliverables: [
-      "On-premise AI system fully operational",
-      "Security documentation and compliance reports",
-      "Integration guides and API documentation",
-      "Training for IT and operations teams",
-      "Monitoring dashboards and alerting systems"
+      "Interactive wireframes and high-fidelity design systems",
+      "Production-ready iOS and Android builds",
+      "Integrated backend services with API documentation",
+      "Automated testing coverage and QA reports",
+      "Deployment pipelines, store listings, and release assets",
+      "Post-launch optimization roadmap and analytics setup"
     ],
-    tools: ["Python", "TensorFlow", "PyTorch", "Docker", "Kubernetes", "NVIDIA CUDA", "OpenVINO", "Custom Hardware"]
+    tools: ["Flutter", "React Native", "Swift", "Kotlin", "Supabase", "Firebase", "Node.js", "Python", "AWS", "GCP", "Docker"]
   }
 ];
 
@@ -319,7 +371,7 @@ export const technologies: Technology[] = [
       "Automated decision-making systems",
       "Sentiment analysis and text classification"
     ],
-    relatedServices: ["ai-mvp-development", "custom-automation"]
+    relatedServices: ["ai-mvp-development", "app-development"]
   },
   {
     slug: "data-engineering",
@@ -335,7 +387,7 @@ export const technologies: Technology[] = [
       "Business intelligence and reporting",
       "Big data analytics platforms"
     ],
-    relatedServices: ["ai-mvp-development", "custom-automation"]
+    relatedServices: ["ai-mvp-development", "app-development"]
   },
   {
     slug: "vr-ar",
@@ -367,7 +419,7 @@ export const technologies: Technology[] = [
       "Autonomous systems and robotics",
       "Medical image analysis"
     ],
-    relatedServices: ["ai-mvp-development", "custom-automation"]
+    relatedServices: ["ai-mvp-development", "app-development"]
   },
   {
     slug: "on-prem-ai",
@@ -383,7 +435,7 @@ export const technologies: Technology[] = [
       "Industrial control systems",
       "Confidential research and development"
     ],
-    relatedServices: ["custom-automation"]
+    relatedServices: ["app-development"]
   }
 ];
 

@@ -91,12 +91,19 @@ export default function IndustryDetail() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="max-w-4xl"
+              className="w-full"
             >
               <h2 className="text-3xl font-serif font-bold mb-6">Overview</h2>
-              <p className="text-lg text-gray-800 dark:text-gray-200 leading-relaxed">
-                {industry.overview}
-              </p>
+              {industry.overview.split("\n\n").map((paragraph, index) => (
+                <p
+                  key={index}
+                  className={`text-lg text-gray-800 dark:text-gray-200 leading-relaxed${
+                    index > 0 ? " mt-6" : ""
+                  }`}
+                >
+                  {paragraph}
+                </p>
+              ))}
             </motion.div>
           </section>
 

@@ -97,6 +97,30 @@ export default function ServiceDetail() {
             </div>
           </section>
 
+          {/* Key Capabilities */}
+          {service.keyCapabilities.length > 0 && (
+            <section className="mb-20">
+              <h2 className="text-3xl font-serif font-bold mb-8">Key Capabilities</h2>
+              <div className="grid md:grid-cols-2 gap-6">
+                {service.keyCapabilities.map((capability, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="flex items-start gap-4 glass rounded-xl p-6"
+                  >
+                    <div className="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center flex-shrink-0">
+                      <div className="w-2 h-2 rounded-full bg-secondary"></div>
+                    </div>
+                    <p className="text-muted-foreground">{capability}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </section>
+          )}
+
           {/* Process */}
           <section className="mb-20">
             <h2 className="text-3xl font-serif font-bold mb-10">Our Process</h2>
@@ -105,12 +129,8 @@ export default function ServiceDetail() {
               
               <div className="space-y-8">
                 {service.process.map((step, index) => (
-                  <motion.div
+                  <div
                     key={index}
-                    initial={{ opacity: 0, x: -50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    viewport={{ once: true }}
                     className="process-step relative pl-0 md:pl-20"
                   >
                     <div className="absolute left-0 top-0 w-16 h-16 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-2xl font-bold text-white hidden md:flex">
@@ -120,7 +140,7 @@ export default function ServiceDetail() {
                       <h3 className="text-2xl font-semibold mb-3">{step.step}</h3>
                       <p className="text-muted-foreground text-lg">{step.description}</p>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
@@ -168,6 +188,16 @@ export default function ServiceDetail() {
               ))}
             </div>
           </section>
+
+          {/* Deployment Options */}
+          {service.deploymentOptions && (
+            <section className="mb-20">
+              <h2 className="text-3xl font-serif font-bold mb-6">Deployment Options</h2>
+              <div className="glass-strong rounded-xl p-8 text-lg text-muted-foreground leading-relaxed">
+                {service.deploymentOptions}
+              </div>
+            </section>
+          )}
 
           {/* CTA */}
           <motion.section

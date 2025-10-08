@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 /* -------- Headline & Assets -------- */
-const heroTexts = ["Phen AI", "Phenonenal AI"];
+const heroTexts = ["Phen AI", "Phenomenal AI"];
 
 const IMAGES = [
   "/images/Hero (1).png",
